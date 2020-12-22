@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
+use App\Model\User;
+use App\Model\Saldo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -46,6 +47,14 @@ class UserController extends Controller
             'alamat'    =>  $request['alamat'],
             'no_telpon' =>  $request['no_telpon'],
             'avatar'    =>  'https:\/\/iili.io\/FVdLas.png',
+        ]);
+
+        //cek user yang suadah di buat tadi
+        $old_user = User::where('email', $request->email)->first();
+        
+        $saldo = Saldo::create([
+            'user_id'      =>  $old_user->id,
+            'saldo'     =>  '0',
         ]);
 
         $token = JWTAuth::fromUser($user);

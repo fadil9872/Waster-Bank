@@ -65,9 +65,13 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'name'      =>  $data['name'],
+            'email'     =>  $data['email'],
+            'password'  =>  Hash::make($data['password']),
+            'role'      =>  1,
+            'alamat'    =>  $data['alamat'],
+            'no_telpon' =>  $data['no_telpon'],
+            'avatar'    =>  'https:\/\/iili.io\/FVdLas.png',
         ]);
     }
 }

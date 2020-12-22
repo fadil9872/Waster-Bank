@@ -39,9 +39,13 @@ class UserController extends Controller
         }
 
         $user = User::create([
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'password' => Hash::make($request->get('password')),
+            'name'      =>  $request->get('name'),
+            'email'     =>  $request->get('email'),
+            'password'  =>  Hash::make($request->get('password')),
+            'role'      =>  1,
+            'alamat'    =>  $request['alamat'],
+            'no_telpon' =>  $request['no_telpon'],
+            'avatar'    =>  'https:\/\/iili.io\/FVdLas.png',
         ]);
 
         $token = JWTAuth::fromUser($user);

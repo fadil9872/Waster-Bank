@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Model\User;
 
 class UserSeeder extends Seeder
 {
@@ -11,51 +12,73 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert ([
+        $admin = User::create([
+
+            'name'      =>  'Admin',
+            'email'     =>  'admin@gmail.com',
+            'password'  =>  bcrypt('admin123'),
+            'alamat'    =>  'Pondok IT',
+            'no_telpon' =>  '085223566615',
+            'avatar'    =>  'https:\/\/iili.io\/FVdLas.png',
+
+        ]);
+        $admin->assignRole('admin');
+
+        $bendahara = User::create([
+
+            'name'      =>  'Bendahara',
+            'email'     =>  'bendahara@gmail.com',
+            'password'  =>  bcrypt('admin123'),
+            'alamat'    =>  'Pondok IT',
+            'no_telpon' =>  '085223566615',
+            'avatar'    =>  'https:\/\/iili.io\/FVdLas.png',
+
+        ]);
+        $bendahara->assignRole('bendahara');
+
+        $pengurus1 = User::create([
+
+            'name'      =>  'Pengurus 2',
+            'email'     =>  'pengurus2@gmail.com',
+            'password'  =>  bcrypt('admin123'),
+            'alamat'    =>  'Pondok IT',
+            'no_telpon' =>  '085223566615',
+            'avatar'    =>  'https:\/\/iili.io\/FVdLas.png',
+
+        ]);
+        $pengurus1->assignRole('pengurus1');
+
+        $pengurus2 = User::create([
+
+            'name'      =>  'Pengurus 1',
+            'email'     =>  'pengurus1@gmail.com',
+            'password'  =>  bcrypt('admin123'),
+            'alamat'    =>  'Pondok IT',
+            'no_telpon' =>  '085223566615',
+            'avatar'    =>  'https:\/\/iili.io\/FVdLas.png',
+
+        ]);
+        $pengurus2->assignRole('pengurus2');
+
+        $nasabah = User::create([
+
+            'name'      =>  'Adian281r',
+            'email'     =>  'adian281r@gmail.com',
+            'password'  =>  bcrypt('admin123'),
+            'alamat'    =>  'Pondok IT',
+            'no_telpon' =>  '085223566615',
+            'avatar'    =>  'https:\/\/iili.io\/FVdLas.png',
+
+        ]);
+        $nasabah->assignRole('nasabah');
+        $saldo = Saldo::create([
             [
-                'name'      =>  'Admin',
-                'email'     =>  'admin@gmail.com',
-                'password'  =>  bcrypt('admin123'),
-                'role'      =>  '5',
-                'alamat'    =>  'Pondok IT',
-                'no_telpon' =>  '085223566615',
-                'avatar'    =>  'https:\/\/iili.io\/FVdLas.png',
+                'user_id'   =>  2,
+                'saldo'     =>  0,
             ],
             [
-                'name'      =>  'Bendahara',
-                'email'     =>  'bendahara@gmail.com',
-                'password'  =>  bcrypt('admin123'),
-                'role'      =>  '4',
-                'alamat'    =>  'Pondok IT',
-                'no_telpon' =>  '085223566615',
-                'avatar'    =>  'https:\/\/iili.io\/FVdLas.png',
-            ],
-            [
-                'name'      =>  'Pengurus 2',
-                'email'     =>  'pengurus2@gmail.com',
-                'password'  =>  bcrypt('admin123'),
-                'role'      =>  '3',
-                'alamat'    =>  'Pondok IT',
-                'no_telpon' =>  '085223566615',
-                'avatar'    =>  'https:\/\/iili.io\/FVdLas.png',
-            ],
-            [
-                'name'      =>  'Pengurus 1',
-                'email'     =>  'pengurus1@gmail.com',
-                'password'  =>  bcrypt('admin123'),
-                'role'      =>  '2',
-                'alamat'    =>  'Pondok IT',
-                'no_telpon' =>  '085223566615',
-                'avatar'    =>  'https:\/\/iili.io\/FVdLas.png',
-            ],
-            [
-                'name'      =>  'Adian281r',
-                'email'     =>  'adian281r@gmail.com',
-                'password'  =>  bcrypt('admin123'),
-                'role'      =>  '1',
-                'alamat'    =>  'Pondok IT',
-                'no_telpon' =>  '085223566615',
-                'avatar'    =>  'https:\/\/iili.io\/FVdLas.png',
+                'user_id'   =>  5,
+                'saldo'     =>  0,
             ],
         ]);
     }

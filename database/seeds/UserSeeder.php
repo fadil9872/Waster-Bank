@@ -1,7 +1,9 @@
 <?php
 
+use App\Model\Saldo;
 use Illuminate\Database\Seeder;
 use App\Model\User;
+
 
 class UserSeeder extends Seeder
 {
@@ -38,8 +40,8 @@ class UserSeeder extends Seeder
 
         $pengurus1 = User::create([
 
-            'name'      =>  'Pengurus 2',
-            'email'     =>  'pengurus2@gmail.com',
+            'name'      =>  'Pengurus 1',
+            'email'     =>  'pengurus1@gmail.com',
             'password'  =>  bcrypt('admin123'),
             'alamat'    =>  'Pondok IT',
             'no_telpon' =>  '085223566615',
@@ -50,8 +52,8 @@ class UserSeeder extends Seeder
 
         $pengurus2 = User::create([
 
-            'name'      =>  'Pengurus 1',
-            'email'     =>  'pengurus1@gmail.com',
+            'name'      =>  'Pengurus 2',
+            'email'     =>  'pengurus2@gmail.com',
             'password'  =>  bcrypt('admin123'),
             'alamat'    =>  'Pondok IT',
             'no_telpon' =>  '085223566615',
@@ -71,15 +73,5 @@ class UserSeeder extends Seeder
 
         ]);
         $nasabah->assignRole('nasabah');
-        $saldo = Saldo::create([
-            [
-                'user_id'   =>  2,
-                'saldo'     =>  0,
-            ],
-            [
-                'user_id'   =>  5,
-                'saldo'     =>  0,
-            ],
-        ]);
     }
 }

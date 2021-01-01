@@ -11,7 +11,7 @@ class SampahSeeder extends Seeder
      */
     public function run()
     {
-        DB::$table('sampahs')->insert([
+        DB::table('sampahs')->insert([
             [
                 'nama'  =>  'Plastik',
                 'harga' =>  '3000',

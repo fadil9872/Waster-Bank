@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Role;
 use App\Model\User;
 use App\Model\Saldo;
 use Illuminate\Http\Request;
@@ -26,7 +27,9 @@ class UserController extends Controller
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
 
-        return response()->json(compact('token'));
+        $user = User::where('email', $request->email)->with('role')->first();
+
+        return response()->json(compact('token', 'user'));
     }
 
     public function register(Request $request)
@@ -66,9 +69,9 @@ class UserController extends Controller
 
     public function profile()
     {
-        $user = auth()->user();
+        $user   = auth()->user();
 
-        $users = User::where('id', $user->id)->with('Saldo')->first();
+        $users  = User::role('nasabah')->where('id', $user->id)->with('Saldo')->first();
 
         return $this->sendResponse('success', 'Ini data profilnya', $users, 200);
     }

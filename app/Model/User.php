@@ -44,4 +44,7 @@ class User extends Authenticatable implements JWTSubject
     public function Saldo () {
         return $this->belongsTo('App\Model\Saldo', 'id', 'user_id');
     }
+    public function role () {
+        return $this->belongsTo('App\Model\Role', 'id', 'model_id');
+    }
 }

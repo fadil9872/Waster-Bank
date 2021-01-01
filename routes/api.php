@@ -29,7 +29,15 @@ Route::group(['namespace' => 'Api','middleware' => ['jwt.verify', 'role:nasabah'
     Route::post('nasabah/permintaan', 'NasabahController@permintaan');
     
 });
+
 Route::group(['namespace' => 'Api', 'middleware' => ['jwt.verify', 'role:pengurus1']], function() {
-    
+    Route::get('pengurus1/get_permintaan', 'Pengurus1Controller@get_permintaan');
+    Route::post('pengurus1/pendataan/{id}', 'Pengurus1Controller@pendataanJemput');
 });
+
+Route::group(['namespace' => 'Api', 'middleware' => 'jwt.verify'], function() {
+    Route::get('permintaan', 'PermintaanController@get_permintaan');
+    Route::get('permintaan/{id}', 'PermintaanController@get_permintaan_id');
+});
+
 

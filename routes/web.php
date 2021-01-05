@@ -27,3 +27,10 @@ Route::get('admin-page', function() {
 Route::get('user-page', function() {
     return 'Halaman untuk User';
 })->middleware('role:user')->name('user.page');
+// Route::group(['namesace' => 'Web', 'middleware' => 'role:admin'], function() {
+    Route::get('admin', 'Web\AdminController@index');
+    Route::get('admin/sampah', 'Web\AdminController@sampah');
+    Route::post('admin/sampah/tambah', 'Web\AdminController@addSampah');
+    Route::patch('admin/sampah/update/{id}', 'Web\AdminController@ubahSampah');
+    Route::delete('admin/sampah/delete/{id}', 'Web\AdminController@hapusSampah');
+// });

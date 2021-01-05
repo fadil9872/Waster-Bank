@@ -27,9 +27,11 @@ class UserController extends Controller
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
 
-        $user = User::where('email', $request->email)->with('role')->first();
+        $user   = User::where('email', $request->email)->first();
+        $role   = Role::where('model_id', $user->id)->first();
+        $role   = $role->role_id;
 
-        return response()->json(compact('token', 'user'));
+        return response()->json(compact('token', 'user', 'role'));
     }
 
     public function register(Request $request)
@@ -61,17 +63,19 @@ class UserController extends Controller
             'user_id'       =>  $old_user->id,
             'saldo'         =>  '0',
         ]);
+        $role   = Role::where('model_id', $old_user->id)->first();
+        $role   = $role->role_id;
 
-        $token = JWTAuth::fromUser($user);
+        $token  = JWTAuth::fromUser($user);
 
-        return response()->json(compact('user', 'token'), 201);
+        return response()->json(compact('old_user', 'token', 'role'), 201);
     }
 
     public function profile()
     {
         $user   = auth()->user();
 
-        $users  = User::role('nasabah')->where('id', $user->id)->with('Saldo')->first();
+        $users  = User::where('id', $user->id)->with('Saldo')->first();
 
         return $this->sendResponse('success', 'Ini data profilnya', $users, 200);
     }
@@ -143,6 +147,7 @@ class UserController extends Controller
             'avatar'    =>  $avatar,
             'password'  =>  $password,
         ]);
+
 
         return $this->sendResponse('success', 'Ini Datanya', $users, 200);
     }

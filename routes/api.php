@@ -26,6 +26,7 @@ Route::patch('edit/profile', 'UserController@edit_profile')->middleware('jwt.ver
 
 Route::group(['namespace' => 'Api','middleware' => ['jwt.verify', 'role:nasabah']], function() {
     Route::get('nasabah/home', 'NasabahController@home');
+    Route::get('nasabah/get_permintaan', 'PermintaanController@get_permintaan');
     Route::post('nasabah/permintaan', 'NasabahController@permintaan');
     
 });
@@ -36,8 +37,5 @@ Route::group(['namespace' => 'Api', 'middleware' => ['jwt.verify', 'role:penguru
 });
 
 Route::group(['namespace' => 'Api', 'middleware' => 'jwt.verify'], function() {
-    Route::get('permintaan', 'PermintaanController@get_permintaan');
     Route::get('permintaan/{id}', 'PermintaanController@get_permintaan_id');
 });
-
-

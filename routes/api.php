@@ -20,7 +20,7 @@ Route::middleware('jwt.verify')->get('/user', function (Request $request) {
 });
 
 Route::post('register', 'Api\UserController@register');
-Route::post('login', 'Api\UserController@login')->middleware('verified');
+Route::post('login', 'Api\UserController@login');
 Route::get('profile', 'Api\UserController@profile')->middleware('jwt.verify');
 Route::patch('edit/profile', 'Api\UserController@edit_profile')->middleware('jwt.verify');
 

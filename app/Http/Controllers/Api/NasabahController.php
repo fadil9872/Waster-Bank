@@ -25,9 +25,7 @@ class NasabahController extends Controller
 
     public function permintaan (Request $request) {
         $user       = auth()->user();
-        if ($request->keterangan = 2) {
-            
-        }
+        
         $permintaan = Permintaan::create([
             'user_id'       =>  $user->id,
             'nama'          =>  $user->name,

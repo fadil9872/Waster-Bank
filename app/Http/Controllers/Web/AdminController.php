@@ -41,4 +41,10 @@ class AdminController extends Controller
 
         return redirect('admin/sampah')->with('status', 'Barang berhasil dihapus');
     }
+
+    public function cari(Request $request) {
+        $nama = $request->nama;
+        $sampahs = Sampah::where('nama','like',"%".$nama."%")->paginate(5);
+        return view('admin.sampah.cari',compact('sampahs'));
+    }
 }

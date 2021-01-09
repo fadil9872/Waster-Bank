@@ -33,4 +33,5 @@ Route::get('user-page', function() {
     Route::post('admin/sampah/tambah', 'Web\AdminController@addSampah');
     Route::patch('admin/sampah/update/{id}', 'Web\AdminController@ubahSampah');
     Route::delete('admin/sampah/delete/{id}', 'Web\AdminController@hapusSampah');
+    Route::get('admin/sampah/cari', 'Web\AdminController@cari');
 // });

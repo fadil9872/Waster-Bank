@@ -19,10 +19,9 @@ class CreatePendataansTable extends Migration
             $table->foreignId('pengurus1_id')->constrained('users');
             $table->foreignId('permintaan_id')->contrained('permintaans')->onDelete('cascade');
             $table->foreignId('sampah_id')->constrained('sampahs');
-            $table->string('berat');
-            $table->integer('keterangan');
+            $table->decimal('berat');
+            $table->string('keterangan');
             $table->integer('debit')->default(0);
-            $table->integer('kredit')->default(0);
             $table->integer('saldo');
             $table->timestamps();
         });

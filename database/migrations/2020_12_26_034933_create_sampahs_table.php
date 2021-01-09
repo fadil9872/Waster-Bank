@@ -16,7 +16,8 @@ class CreateSampahsTable extends Migration
         Schema::create('sampahs', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->integer('harga');
+            $table->integer('harga_nasabah');
+            $table->integer('harga_pengepul');
             $table->timestamps();
         });
     }

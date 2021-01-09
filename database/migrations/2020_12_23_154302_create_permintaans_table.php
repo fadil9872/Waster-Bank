@@ -21,7 +21,7 @@ class CreatePermintaansTable extends Migration
             $table->string('lokasi');
             $table->string('no_telpon');
             $table->string('keterangan');
-            $table->string('status')->default('1');
+            $table->integer('status')->default('1');
             $table->timestamps();
         });
     }

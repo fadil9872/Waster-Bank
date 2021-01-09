@@ -19,4 +19,11 @@ class Controller extends BaseController
             'data'      =>  $data
         ], $statusCode );
     }
+
+    public function respondWithMessage($status, $message) {
+        return response()->json([
+            'status'    => $status,
+            'message'   => $message,
+        ]);
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Model\Gudang;
 use App\Model\Pendataan;
 use Illuminate\Http\Request;
 use App\Model\Permintaan;
@@ -32,7 +33,12 @@ class Pengurus1Controller extends Controller
         $permintaan = Permintaan::where('id', $id)->where('status', 1)->first();
         //dapatkan user pengurus_1 yang online
         $user = auth()->user();
-        return $request->sampah;
+        //jika permintaan tidak ada
+        if (!$permintaan) {
+            return $this->sendResponse('error', 'permintaan tidak ada ', NULL, 200);
+        }
+        //Rencana A
+
         //dapatkan sampah yang sesuai dengan idnya
         // $sampah = Sampah::where('id', $request->sampah_id)->first();
         // //pemasukan sampah dikalikan dari harga sampah * berat yang di imputkan - 10%
@@ -54,16 +60,20 @@ class Pengurus1Controller extends Controller
 
         // ]);
 
-        
-
-
         // Rencana B
         $sampahs = $request->sampah;
+        // return $permintaan;
 
         foreach ($sampahs as $item) {
             $sampah = Sampah::where('id', $item['sampah_id'])->first();
-            //pemasukan sampah dikalikan dari harga sampah * berat yang di imputkan - 10%
-            $debit  = $sampah->harga * $item['berat'] - ($sampah->harga * $item['berat'] * 0.1);
+            if ($permintaan->keterangan = 'datang') {
+                //pemasukan sampah dikalikan dari harga sampah * berat yang di imputkan 
+                $debit  = $sampah->harga_nasabah * $item['berat'];
+            } 
+            if ($permintaan->keterangan = 'dijemput') {
+                //pemasukan sampah dikalikan dari harga_nasabah sampah * berat yang di imputkan - 10%
+                $debit  = ($sampah->harga_nasabah * $item['berat']) - ($sampah->harga_nasabah * $item['berat'] * 0.1);
+            }
             //dapatkan saldo user
             $saldo_user  = Saldo::where('user_id', $permintaan->user_id)->first();
             //penjumlahan saldo sebelum + yg baru di jual
@@ -80,6 +90,19 @@ class Pengurus1Controller extends Controller
                 'saldo'         =>  $saldo,
 
             ]);
+
+            $gudang = Gudang::where('sampah_id', $sampah->id)->first();
+            $gudang->berat = $gudang->berat + $item['berat'];
+            $gudang->update();
+
+            $tabungan = Tabungan::create([
+                'user_id'   =>  $permintaan->user_id,
+                'keterangan'=>  'penyetoran',
+                'debit'     =>  $debit,
+            ]);
+            $saldo_tabungan  = $saldo_user->update([
+                'saldo'     =>  $saldo,
+            ]);
         }
         // $tabungan = Tabungan::create([
         //     'user_id'   =>  $permintaan->user_id,
@@ -88,15 +111,15 @@ class Pengurus1Controller extends Controller
         // ]);
 
 
-        $saldo_tabungan  = $saldo_user->update([
-            'saldo' =>  $saldo,
-        ]);
+        
+        $permintaan->status ='2';
+        $permintaan->update();
 
         return response()->json([
             'status'    =>  'success',
             'message'   =>  'Ini data yang sudah dimasukan',
-            'pendataan' =>  $pendataan,
-            'saldo user' =>  $saldo_tabungan,
+            'pendataan' =>  $request->sampah,
+            'saldo user'=>  $saldo_tabungan,
         ], 200);
     }
 }

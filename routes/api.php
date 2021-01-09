@@ -19,10 +19,17 @@ Route::middleware('jwt.verify')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('register', 'UserController@register');
-Route::post('login', 'UserController@login');
-Route::get('profile', 'UserController@profile')->middleware('jwt.verify');
-Route::patch('edit/profile', 'UserController@edit_profile')->middleware('jwt.verify');
+Route::post('register', 'Api\UserController@register');
+Route::post('login', 'Api\UserController@login')->middleware('verified');
+Route::get('profile', 'Api\UserController@profile')->middleware('jwt.verify');
+Route::patch('edit/profile', 'Api\UserController@edit_profile')->middleware('jwt.verify');
+
+Route::post('password/email', 'Api\ForgotPasswordController@forgot');
+Route::post('password/reset', 'Api\ForgotPasswordController@reset');
+
+Route::get('email/resend', 'Api\VerificationController@resend')->name('verification.resend');
+
+Route::get('email/verify/{id}/{hash}', 'Api\VerificationController@verify')->name('verification.verify');
 
 Route::group(['namespace' => 'Api','middleware' => ['jwt.verify', 'role:nasabah']], function() {
     Route::get('nasabah/home', 'NasabahController@home');

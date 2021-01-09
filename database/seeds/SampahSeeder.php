@@ -14,19 +14,23 @@ class SampahSeeder extends Seeder
         DB::table('sampahs')->insert([
             [
                 'nama'  =>  'Plastik',
-                'harga' =>  '3000',
+                'harga_nasabah' =>  '3000',
+                'harga_pengepul'    => '3300',
             ],
             [
                 'nama'  =>  'Besi',
-                'harga' =>  '7000',
+                'harga_nasabah' =>  '7000',
+                'harga_pengepul'    =>  '7700',
             ],
             [
                 'nama'  =>  'Kaleng',
-                'harga' =>  '4000',
+                'harga_nasabah' =>  '4000',
+                'harga_pengepul'    =>  '4400',
             ],
             [
                 'nama'  =>  'Kertas',
-                'harga' =>  '6000',
+                'harga_nasabah' =>  '6000',
+                'harga_pengepul'    =>  '6600',
             ],
         ]);
     }

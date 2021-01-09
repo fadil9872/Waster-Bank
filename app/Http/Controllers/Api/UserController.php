@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Model\Role;
 use App\Model\User;
 use App\Model\Saldo;
@@ -40,6 +41,8 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'alamat' => 'required|string|max:255',
+            'no_telpon' => 'required|string|max:255',
         ]);
 
         if ($validator->fails()) {
@@ -67,6 +70,11 @@ class UserController extends Controller
         $role   = $role->role_id;
 
         $token  = JWTAuth::fromUser($user);
+
+
+        // $accessToken = $user->createToken('authToken')->accessToken;
+
+        // return response(['user'=> $user, 'access_token'=> $accessToken]);
 
         return response()->json(compact('old_user', 'token', 'role'), 201);
     }

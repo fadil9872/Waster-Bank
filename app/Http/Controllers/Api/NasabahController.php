@@ -29,7 +29,7 @@ class NasabahController extends Controller
         $permintaan = Permintaan::create([
             'user_id'       =>  $user->id,
             'nama'          =>  $user->name,
-            'lokasi'        =>  $user->alamat,
+            'lokasi'        =>  $request->lokasi,
             'no_telpon'     =>  $user->no_telpon,
             'keterangan'    =>  $request->keterangan,
             'status'        =>  1,

@@ -167,11 +167,13 @@ class UserController extends Controller
         $user   = auth()->user();
         $role   = Role::where('model_id', $user->id)->first();
         $role   = $role->role_id;
+        $alamat = Alamat::where('user_id', $user->id)->get();
         
         return response()->json([
             'status'    =>  'success',
             'message'   =>  'Ini data Homenya',
             'data'      =>  $user,
+            'alamat'    =>  $alamat,
             'role'      =>  $role,
         ],200);
         // return $this->sendResponse('success', 'Data berhasi di tampilkan', $user, 200);

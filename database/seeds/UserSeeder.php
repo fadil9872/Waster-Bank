@@ -38,6 +38,30 @@ class UserSeeder extends Seeder
         ]);
         $bendahara->assignRole('bendahara');
 
+        $cs1 = User::create([
+
+            'name'      =>  'Costmer Service Kretek',
+            'email'     =>  'cs_kretek@gmail.com',
+            'password'  =>  bcrypt('admin123'),
+            // 'alamat'    =>  'Pondok IT',
+            'no_telpon' =>  '085223566615',
+            'avatar'    =>  'https:\/\/iili.io\/FVdLas.png',
+
+        ]);
+        $cs1->assignRole('costumer_service');
+        
+        $cs2 = User::create([
+
+            'name'      =>  'Costmer Service Parangtritis',
+            'email'     =>  'cs_parangtritis@gmail.com',
+            'password'  =>  bcrypt('admin123'),
+            // 'alamat'    =>  'Pondok IT',
+            'no_telpon' =>  '085223566615',
+            'avatar'    =>  'https:\/\/iili.io\/FVdLas.png',
+
+        ]);
+        $cs2->assignRole('costumer_service');
+
         $pengurus1 = User::create([
 
             'name'      =>  'Pengurus 1',

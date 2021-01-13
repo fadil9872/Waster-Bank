@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Model\Alamat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -18,6 +19,8 @@ class NasabahController extends Controller
 
     public function permintaan (Request $request) {
         $user       = auth()->user();
+
+        $alamat     = Alamat::where('id', $id)->first();
         
         $permintaan = Permintaan::create([
             'user_id'       =>  $user->id,

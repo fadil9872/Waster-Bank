@@ -25,6 +25,11 @@ Route::get('profile', 'Api\UserController@profile')->middleware('jwt.verify');
 Route::patch('edit/profile', 'Api\UserController@edit_profile')->middleware('jwt.verify');
 Route::get('home', 'Api\UserController@home')->middleware('jwt.verify');
 
+Route::post('tambah/alamat', 'Api\AlamatController@addAlamat')->middleware('jwt.verify');
+Route::post('edit/alamat/{id}', 'Api\AlamatController@editAlamat')->middleware('jwt.verify');
+Route::post('hapus/alamat/{id}', 'Api\AlamatController@hapusAlamat')->middleware('jwt.verify');
+Route::post('ubah/alamat/utama/{id}', 'Api\AlamatController@addAlamat')->middleware('jwt.verify');
+
 Route::post('password/email', 'Api\ForgotPasswordController@forgot');
 Route::post('password/reset', 'Api\ForgotPasswordController@reset');
 

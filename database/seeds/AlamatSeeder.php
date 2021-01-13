@@ -43,6 +43,18 @@ class AlamatSeeder extends Seeder
                 'alamat'    => 'Tirtohargo, kretek',
                 'status'    => 1,
             ],
+            [
+                'user_id'   => 6,
+                'wilayah_id'=> 	3402030,
+                'alamat'    => 'Tirtohargo, kretek',
+                'status'    => 1,
+            ],
+            [
+                'user_id'   => 7,
+                'wilayah_id'=> 	3402030,
+                'alamat'    => 'Tirtohargo, kretek',
+                'status'    => 1,
+            ],
         ]);
     }
 }

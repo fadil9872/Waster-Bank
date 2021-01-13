@@ -17,8 +17,10 @@ class CreatePermintaansTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('pengurus_id')->contrained('users')->nullable();
+            $table->foreignId('alamat_id')->constrained('alamats');
             $table->string('nama');
             $table->string('lokasi');
+            $table->integer('wilayah_id');
             $table->string('no_telpon');
             $table->string('keterangan');
             $table->integer('status')->default('1');

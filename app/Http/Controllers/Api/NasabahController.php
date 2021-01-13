@@ -15,13 +15,6 @@ use App\Model\Permintaan;
 
 class NasabahController extends Controller
 {
-    public function home()
-    {
-        $users  = auth()->user();
-        $user   = User::where('id', $users->id)->first();
-        
-        return $this->sendResponse('success', 'Data berhasi di tampilkan', $user, 200);
-    }
 
     public function permintaan (Request $request) {
         $user       = auth()->user();
@@ -37,6 +30,25 @@ class NasabahController extends Controller
 
         return $this->sendResponse('success', 'Data Berhasil Di Buat',$permintaan, 200);
     }
+
+    public function get_permintaan () {
+        $user   = auth()->user();
+        $permintaan = Permintaan::where('user_id', $user->id)->where('status', 1)->get();
+        // if (!$permintaan) {
+        //     $permintaan = Permintaan::where('status', 1)->get();
+        // }
+
+        return $this->sendResponse('success', 'Ini data permintaannya', $permintaan, 200);
+    }
+
+    public function get_permintaan_id ($id) {
+        $user   = auth()->user();
+
+        $permintaan = Permintaan::where('id', $id)->first();
+
+        return $this->sendResponse('success', 'Ini detail permintaannya');
+    }
+
 
     public function delete_permintaan($id) {
         $user   = auth()->user();

@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             'name'      =>  'Admin',
             'email'     =>  'admin@gmail.com',
             'password'  =>  bcrypt('admin123'),
-            'alamat'    =>  'Pondok IT',
+            // 'alamat'    =>  'Pondok IT',
             'no_telpon' =>  '085223566615',
             'avatar'    =>  'https:\/\/iili.io\/FVdLas.png',
 
@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
             'name'      =>  'Bendahara',
             'email'     =>  'bendahara@gmail.com',
             'password'  =>  bcrypt('admin123'),
-            'alamat'    =>  'Pondok IT',
+            // 'alamat'    =>  'Pondok IT',
             'no_telpon' =>  '085223566615',
             'avatar'    =>  'https:\/\/iili.io\/FVdLas.png',
 
@@ -43,7 +43,7 @@ class UserSeeder extends Seeder
             'name'      =>  'Pengurus 1',
             'email'     =>  'pengurus1@gmail.com',
             'password'  =>  bcrypt('admin123'),
-            'alamat'    =>  'Pondok IT',
+            // 'alamat'    =>  'Pondok IT',
             'no_telpon' =>  '085223566615',
             'avatar'    =>  'https:\/\/iili.io\/FVdLas.png',
 
@@ -55,7 +55,7 @@ class UserSeeder extends Seeder
             'name'      =>  'Pengurus 2',
             'email'     =>  'pengurus2@gmail.com',
             'password'  =>  bcrypt('admin123'),
-            'alamat'    =>  'Pondok IT',
+            // 'alamat'    =>  'Pondok IT',
             'no_telpon' =>  '085223566615',
             'avatar'    =>  'https:\/\/iili.io\/FVdLas.png',
 
@@ -67,7 +67,7 @@ class UserSeeder extends Seeder
             'name'      =>  'Adian281r',
             'email'     =>  'adian281r@gmail.com',
             'password'  =>  bcrypt('admin123'),
-            'alamat'    =>  'Pondok IT',
+            // 'alamat'    =>  'Pondok IT',
             'no_telpon' =>  '085223566615',
             'avatar'    =>  'https:\/\/iili.io\/FVdLas.png',
 

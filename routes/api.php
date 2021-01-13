@@ -23,6 +23,7 @@ Route::post('register', 'Api\UserController@register');
 Route::post('login', 'Api\UserController@login');
 Route::get('profile', 'Api\UserController@profile')->middleware('jwt.verify');
 Route::patch('edit/profile', 'Api\UserController@edit_profile')->middleware('jwt.verify');
+Route::get('home', 'Api\UserController@home')->middleware('jwt.verify');
 
 Route::post('password/email', 'Api\ForgotPasswordController@forgot');
 Route::post('password/reset', 'Api\ForgotPasswordController@reset');
@@ -32,10 +33,9 @@ Route::get('email/resend', 'Api\VerificationController@resend')->name('verificat
 Route::get('email/verify/{id}/{hash}', 'Api\VerificationController@verify')->name('verification.verify');
 
 Route::group(['namespace' => 'Api','middleware' => ['jwt.verify', 'role:nasabah']], function() {
-    Route::get('nasabah/home', 'NasabahController@home');
-    Route::get('nasabah/get_permintaan', 'PermintaanController@get_permintaan');
+    Route::get('nasabah/get_permintaan', 'NasabahController@get_permintaan');
     Route::post('nasabah/permintaan', 'NasabahController@permintaan');
-    
+
 });
 
 Route::group(['namespace' => 'Api', 'middleware' => ['jwt.verify', 'role:pengurus1']], function() {
@@ -43,6 +43,10 @@ Route::group(['namespace' => 'Api', 'middleware' => ['jwt.verify', 'role:penguru
     Route::post('pengurus1/pendataan/{id}', 'Pengurus1Controller@pendataanJemput');
 });
 
-Route::group(['namespace' => 'Api', 'middleware' => 'jwt.verify'], function() {
-    Route::get('permintaan/{id}', 'PermintaanController@get_permintaan_id');
+Route::group(['namespace' => 'Api', 'middleware' => ['jwt.verify', 'role:pengurus2']], function() {
+    // Route::
+    // Route::
+    // Route::
+    // Route::
+    // Route::
 });

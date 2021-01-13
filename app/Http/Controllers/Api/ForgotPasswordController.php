@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Model\ApiCode;
+use App\Model\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 
@@ -11,6 +12,13 @@ class ForgotPasswordController extends Controller
 {
     public function forgot() {
         $credentials = request()->validate(['email' => 'required|email']);
+        
+        $user = User::where('email', $credentials['email'])->first();
+
+        // dd($user);
+        if (!$user) {
+            return $this->sendResponse('error', 'email tidak tersedia', NULL, 401);
+        }
 
         Password::sendResetLink($credentials);
 

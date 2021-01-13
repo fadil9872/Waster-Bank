@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Model\Alamat;
 use App\Model\Role;
 use App\Model\User;
 use App\Model\Saldo;
@@ -38,11 +39,11 @@ class UserController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-            'alamat' => 'required|string|max:255',
-            'no_telpon' => 'required|string|max:255',
+            'name'          => 'required|string|max:255',
+            'email'         => 'required|string|email|max:255|unique:users',
+            'password'      => 'required|string|min:6|confirmed',
+            'alamat'        => 'required|string|max:255',
+            'no_telpon'     => 'required|string|max:255',
         ]);
 
         if ($validator->fails()) {
@@ -50,17 +51,23 @@ class UserController extends Controller
         }
 
         $user = User::create([
-            'name'      =>  $request->get('name'),
-            'email'     =>  $request->get('email'),
-            'password'  =>  Hash::make($request->get('password')),
-            'alamat'    =>  $request['alamat'],
-            'no_telpon' =>  $request['no_telpon'],
-            'avatar'    =>  'https:\/\/iili.io\/FVdLas.png',
+            'name'          =>  $request->get('name'),
+            'email'         =>  $request->get('email'),
+            'password'      =>  Hash::make($request->get('password')),
+            'no_telpon'     =>  $request['no_telpon'],
+            'avatar'        =>  'https:\/\/iili.io\/FVdLas.png',
         ]);
         $user->assignRole('nasabah');
 
         //cek user yang sudah di buat tadi
         $old_user = User::where('email', $request->email)->first();
+
+        $alamat = Alamat::create([
+            'user_id'       =>  $old_user->id,
+            'alamat'        =>  $request->alamat,
+            'wilayah_id'    =>  $request->wilayah_id,
+            'status'        =>  1,
+        ]);
 
         $saldo = Saldo::create([
             'user_id'       =>  $old_user->id,
@@ -119,10 +126,6 @@ class UserController extends Controller
         if ($request->name) {
             $name = $request->name;
         }
-        $alamat = $users->alamat;
-        if ($request->alamat) {
-            $alamat = $request->alamat;
-        }
         $no_telpon = $users->no_telpon;
         if ($request->no_telpon) {
             $no_telpon = $request->no_telpon;
@@ -134,10 +137,10 @@ class UserController extends Controller
             $client = new \GuzzleHttp\Client();
             $response = $client->request('POST', 'https://freeimage.host/api/1/upload', [
                 'form_params' => [
-                    'key' => '6d207e02198a847aa98d0a2a901485a5',
-                    'action' => 'upload',
-                    'source' => $img,
-                    'format' => 'json'
+                    'key'       => '6d207e02198a847aa98d0a2a901485a5',
+                    'action'    => 'upload',
+                    'source'    => $img,
+                    'format'    => 'json'
                 ]
             ]);
             $arr = json_decode($response->getBody()->getContents());
@@ -150,7 +153,6 @@ class UserController extends Controller
 
         $users->update([
             'name'      =>  $name,
-            'alamat'    =>  $alamat,
             'no_telpon' =>  $no_telpon,
             'avatar'    =>  $avatar,
             'password'  =>  $password,
@@ -159,4 +161,20 @@ class UserController extends Controller
 
         return $this->sendResponse('success', 'Ini Datanya', $users, 200);
     }
+
+    public function home()
+    {
+        $user   = auth()->user();
+        $role   = Role::where('model_id', $user->id)->first();
+        $role   = $role->role_id;
+        
+        return response()->json([
+            'status'    =>  'success',
+            'message'   =>  'Ini data Homenya',
+            'data'      =>  $user,
+            'role'      =>  $role,
+        ],200);
+        // return $this->sendResponse('success', 'Data berhasi di tampilkan', $user, 200);
+    }
+
 }

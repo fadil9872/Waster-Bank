@@ -11,8 +11,11 @@ class PendataanSeeder extends Seeder
      */
     public function run()
     {
-        DB::insert("INSERT INTO permintaans (id, user_id, pengurus_id, nama, lokasi, no_telpon, keterangan, status, created_at, updated_at) VALUES
-        (1, 5, NULL, 'Adian281r', 'CIrebon', '08522356616', 'datang', '1', '2020-12-30 00:06:58', '2021-01-05 18:58:03'),
-        (2, 5, NULL, 'Adian281r', 'CIrebon', '08522356616', 'dijemput', '1', '2020-12-30 00:06:58', '2021-01-05 18:58:03');");
+        DB::insert("INSERT INTO permintaans (id, user_id, pengurus_id, alamat_id, nama, lokasi, wilayah_id, no_telpon, keterangan, status, tanggal, created_at, updated_at) VALUES 
+        (NULL, '7', NULL, '7', 'nasabah', 'Tirtohargo, Kretek', '3402030', '08522356616', 'datang', '1', '2021-01-14', '2021-01-14 19:14:52', '2021-01-14 19:14:52'),
+        (NULL, '7', NULL, '7', 'nasabah', 'Tirtohargo, Kretek', '3402030', '08522356616', 'datang', '1', '2021-01-14', '2021-01-14 19:14:52', '2021-01-14 19:14:52');
+         ");
     }
+
+   
 }

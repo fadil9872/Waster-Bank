@@ -36,7 +36,7 @@ class AlamatController extends Controller
         return $this->sendResponse('success', 'Alamat berhasil diubah', $alamat, 200);
     }
 
-    public function delete($id) {
+    public function hapusAlamat($id) {
         $user   = auth()->user();
 
         $alamat = Alamat::where('id', $id)->where('user_id', $user->id)->first();
@@ -46,5 +46,22 @@ class AlamatController extends Controller
         $alamat->delete();
 
         return $this->sendResponse('success', 'Alamat berhasil dihapus', NULL, 200);
+    }
+
+    public function ubahAlamat($id) {
+        $user   = auth()->user();
+
+        $alamats = Alamat::where('user_id', $user->id)->get();
+
+        foreach ($alamats as $alamat) {
+            $alamat->status = 2;
+            $alamat->update();
+        }
+
+        $alamatNew  = Alamat::where('id', $id)->where('user_id', $user->id)->first();
+        $alamatNew->status = 1;
+        $alamatNew->update();
+
+        return $this->sendResponse('success', 'Alamat Utama berhasil di ubah', $alamatNew , 200);
     }
 }

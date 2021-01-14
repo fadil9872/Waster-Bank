@@ -13,6 +13,7 @@ use Spatie\Permission\Traits\HasRoles;
 use App\Model\User;
 use App\Model\Saldo;
 use App\Model\Permintaan;
+use Carbon\Carbon;
 
 class NasabahController extends Controller
 {
@@ -20,12 +21,18 @@ class NasabahController extends Controller
     public function permintaan (Request $request) {
         $user       = auth()->user();
 
-        $alamat     = Alamat::where('id', $id)->first();
+        $alamat     = Alamat::where('id', $request->alamat_id)->where('user_id', $user->id)->first();
+
+        if (! $alamat) {
+            return $this->sendResponse('error', 'alamat tidak ditemukan', NULL, 400);
+        }
         
         $permintaan = Permintaan::create([
             'user_id'       =>  $user->id,
             'nama'          =>  $user->name,
-            'lokasi'        =>  $request->lokasi,
+            'lokasi'        =>  $alamat->alamat,
+            'alamat_id'     =>  $alamat->id,
+            'wilayah_id'    =>  $alamat->wilayah_id,
             'no_telpon'     =>  $user->no_telpon,
             'keterangan'    =>  $request->keterangan,
             'status'        =>  1,
@@ -36,7 +43,9 @@ class NasabahController extends Controller
 
     public function get_permintaan () {
         $user   = auth()->user();
-        $permintaan = Permintaan::where('user_id', $user->id)->where('status', 1)->get();
+
+        $tanggal = Carbon::now()->toDateString();
+        $permintaan = Permintaan::where('user_id', $user->id)->where('status', 1)->where('tanggal', $tanggal)->get();
         // if (!$permintaan) {
         //     $permintaan = Permintaan::where('status', 1)->get();
         // }

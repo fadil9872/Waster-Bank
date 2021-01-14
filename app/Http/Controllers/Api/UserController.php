@@ -120,17 +120,30 @@ class UserController extends Controller
     {
         $user = auth()->user();
 
-        $users = User::where('id', $user->id)->first();
+        // return $user;
 
-        $name   = $users->name;
-        if ($request->name) {
-            $name = $request->name;
-        }
-        $no_telpon = $users->no_telpon;
-        if ($request->no_telpon) {
-            $no_telpon = $request->no_telpon;
-        }
-        $avatar = $users->avatar;
+        // $name   = $users->name;
+        // if ($request->name) {
+        //     $name = $request->name;
+        // }
+        // $no_telpon = $users->no_telpon;
+        // if ($request->no_telpon) {
+        //     $no_telpon = $request->no_telpon;
+        // }
+        // $avatar = $users->avatar;
+
+
+
+
+
+        $data = $request->all();
+
+        $filter   = array_filter($data);
+
+        $user->update(
+            $filter
+        );
+
         if ($request->avatar) {
             $img = base64_encode(file_get_contents($request->avatar));
 
@@ -145,21 +158,13 @@ class UserController extends Controller
             ]);
             $arr = json_decode($response->getBody()->getContents());
             $avatar = $arr->image->file->resource->chain->image;
+            
+            $user->avatar = $avatar;
+            $user->update();
         }
-        $password = $user->password;
-        if ($request->password) {
-            $password = Hash::make($request->get('password'));
-        }
-
-        $users->update([
-            'name'      =>  $name,
-            'no_telpon' =>  $no_telpon,
-            'avatar'    =>  $avatar,
-            'password'  =>  $password,
-        ]);
 
 
-        return $this->sendResponse('success', 'Ini Datanya', $users, 200);
+        return $this->sendResponse('success', 'Ini Datanya', $user, 200);
     }
 
     public function home()

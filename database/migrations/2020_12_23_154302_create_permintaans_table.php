@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,7 +14,8 @@ class CreatePermintaansTable extends Migration
      */
     public function up()
     {
-        Schema::create('permintaans', function (Blueprint $table) {
+        $tanggal = Carbon::now()->toDateString();
+        Schema::create('permintaans', function (Blueprint $table) use($tanggal) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('pengurus_id')->contrained('users')->nullable();
@@ -24,6 +26,7 @@ class CreatePermintaansTable extends Migration
             $table->string('no_telpon');
             $table->string('keterangan');
             $table->integer('status')->default('1');
+            $table->date('tanggal')->default($tanggal);
             $table->timestamps();
         });
     }

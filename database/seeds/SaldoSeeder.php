@@ -13,7 +13,7 @@ class SaldoSeeder extends Seeder
     {
         DB::table('saldos')->insert([
             [
-                'user_id'   =>  5,
+                'user_id'   =>  7,
                 'saldo'     =>  0,  
             ]
         ]);

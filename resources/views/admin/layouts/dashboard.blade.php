@@ -102,7 +102,7 @@
                                 <i class="zmdi zmdi-search"></i>
                                 <div class="search-dropdown js-dropdown">
                                     <form action="">
-                                        <input class="au-input au-input--full au-input--h65" type="text" placeholder="Search for datas &amp; reports..." />
+                                        <input class="au-input au-input--full au-input--h65" onkeyup="search_box(this.value)" type="text" placeholder="Search for datas &amp; reports..." />
                                         <span class="search-dropdown__icon">
                                             <i class="zmdi zmdi-search"></i>
                                         </span>
@@ -229,6 +229,27 @@
         <!-- END STATISTIC-->
 
     </div>
+
+    <script>
+        // function search_box(cari) {
+        //     var value = cari.toLowerCase();
+        //     $(".filter-box tr").filter(function() {
+        //         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        //     });
+        //     console.log(
+        //         $(this).text().toLowerCase()
+        //     );
+        // }
+        $.ajax({
+            type: "post",
+            url: "view/admin/",
+            data: "data",
+            dataType: "dataType",
+            success: function (response) {
+                
+            }
+        });
+    </script>
 
 
 

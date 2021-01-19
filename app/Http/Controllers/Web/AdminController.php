@@ -47,4 +47,5 @@ class AdminController extends Controller
         $sampahs = Sampah::where('nama','like',"%".$nama."%")->paginate(5);
         return view('admin.sampah.cari',compact('sampahs'));
     }
+
 }

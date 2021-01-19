@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Model\Alamat;
+use App\Model\Permintaan;
 use App\Model\Role;
 use App\Model\User;
 use App\Model\Saldo;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -132,9 +134,11 @@ class UserController extends Controller
         // }
         // $avatar = $users->avatar;
 
+        $password = $request->password_confirmation;
 
-
-
+        if (!Hash::check($password, $user->password)) {
+            return $this->sendResponse('error', 'please check your password', NULL, 404);
+        }
 
         $data = $request->all();
 
@@ -173,6 +177,14 @@ class UserController extends Controller
         $role   = Role::where('model_id', $user->id)->first();
         $role   = $role->role_id;
         $alamat = Alamat::where('user_id', $user->id)->get();
+        $tanggal = Carbon::now()->toDateString();
+        if ($role == 6) {
+            
+            $permintaan = Permintaan::where('user_id', $user->id)->get();
+        } elseif ($role == 4) {
+            $permintaan = Permintaan::where('tanggal', $tanggal)->where('wilayah_id', $alamat->wilayah_id)->get();
+        }
+
         
         return response()->json([
             'status'    =>  'success',
@@ -180,6 +192,7 @@ class UserController extends Controller
             'data'      =>  $user,
             'alamat'    =>  $alamat,
             'role'      =>  $role,
+            'permintaan'=>  $permintaan,
         ],200);
         // return $this->sendResponse('success', 'Data berhasi di tampilkan', $user, 200);
     }

@@ -37,7 +37,7 @@
                         <th>Status</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class= "filter-box">
                     @foreach($sampah as $item)
                     <tr>
                         <td> {{ $loop->iteration}} </td>

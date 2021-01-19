@@ -35,3 +35,10 @@ Route::get('user-page', function() {
     Route::delete('admin/sampah/delete/{id}', 'Web\AdminController@hapusSampah');
     Route::get('admin/sampah/cari', 'Web\AdminController@cari');
 // });
+
+Route::get('/ajax', function () {
+    return view('admin/layouts/ajax');
+});
+Route::post('/kirimpesan', function () {
+    return view('admin/layouts/kirimpesan');
+});

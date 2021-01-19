@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGudangsTable extends Migration
+class CreateMessagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateGudangsTable extends Migration
      */
     public function up()
     {
-        Schema::create('gudangs', function (Blueprint $table) {
+        Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->bigIncrements('sampah_id')->onUpdate('cascade')->onDelete('cascade');
-            $table->decimal('berat');
+            $table->integer('from');
+            $table->integer('to');
+            $table->string('message');
+            $table->integer('is_read');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateGudangsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('gudangs');
+        Schema::dropIfExists('messages');
     }
 }

@@ -40,6 +40,10 @@ class AlamatController extends Controller
         $user   = auth()->user();
 
         $alamat = Alamat::where('id', $id)->where('user_id', $user->id)->first();
+
+        if ($alamat->status == 1) {
+            return $this->sendResponse('error', 'Alamat Utama tidak bisa di hapus', NULL, 200);
+        }
         if (empty($alamat)) {
             return $this->sendResponse('error', 'Alamat tidak ditemukan', NULL, 200);
         }

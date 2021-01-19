@@ -15,7 +15,9 @@ class Pengurus1Controller extends Controller
 {
     public function get_permintaan()
     {
-        $permintaan = Permintaan::where('status', 1)->get();
+        $tanggal = Carbon::now()->toDateString();
+
+        $permintaan = Permintaan::where('status', 1)->where('tanggal', $tanggal)->get();
 
         return $this->sendResponse('success', 'Ini Data Permintaan', $permintaan, 200);
     }

@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Model\Message;
+use App\Model\Role;
+use App\Model\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MessageController extends Controller
 {
@@ -58,6 +61,15 @@ class MessageController extends Controller
     }
 
     public function indexNasabah() {
-        
+        $user = auth()->user();
+
+        // $from  = DB::select(users.id)
+        $role = Role::where('model_id', '!=', $user->id)->where('role_id', 3)->with(user)->get();
+        // foreach ($role as $users) {
+        //     $kontak = User::where('id', $users->model_id)->all();
+            
+        // }
+        // $kontaks = $kontak->get();
+        return $this->sendResponse('success', 'this kontak Pengurus 1 for nasabah', $role, 200);
     }
 }

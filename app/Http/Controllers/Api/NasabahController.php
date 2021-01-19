@@ -45,7 +45,7 @@ class NasabahController extends Controller
         $user   = auth()->user();
 
         $tanggal = Carbon::now()->toDateString();
-        $permintaan = Permintaan::where('user_id', $user->id)->where('status', 1)->where('tanggal', $tanggal)->get();
+        $permintaan = Permintaan::where('user_id', $user->id)->where('status', 1)->get();
         // if (!$permintaan) {
         //     $permintaan = Permintaan::where('status', 1)->get();
         // }

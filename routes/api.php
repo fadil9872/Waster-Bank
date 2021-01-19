@@ -40,6 +40,7 @@ Route::get('email/verify/{id}/{hash}', 'Api\VerificationController@verify')->nam
 Route::group(['namespace' => 'Api','middleware' => ['jwt.verify', 'role:nasabah']], function() {
     Route::get('nasabah/get_permintaan', 'NasabahController@get_permintaan');
     Route::post('nasabah/permintaan', 'NasabahController@permintaan');
+    Route::get('nasabah/kontak_penjual', 'MessageController@indexNasabah');
 
 });
 

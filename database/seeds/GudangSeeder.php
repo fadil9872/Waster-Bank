@@ -13,19 +13,11 @@ class GudangSeeder extends Seeder
     {
         DB::table('gudangs')->insert([
             [
-                'sampah_id' =>  1,
-                'berat'     =>  0,
-            ],
-            [
                 'sampah_id' =>  2,
-                'berat'     =>  0,
+                'berat'     =>  10000000,
             ],
             [
-                'sampah_id' =>  3,
-                'berat'     =>  0,
-            ],
-            [
-                'sampah_id' =>  4,
+                'sampah_id' =>  7,
                 'berat'     =>  0,
             ],
         ]);

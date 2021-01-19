@@ -18,7 +18,7 @@ class SaldoSeeder extends Seeder
             ],
             [
                 'user_id'   =>  2,
-                'saldo'     =>  0,  
+                'saldo'     =>  10000000,  
             ],
             [
                 'user_id'   =>  3,

@@ -15,7 +15,7 @@ class CreateGudangsTable extends Migration
     {
         Schema::create('gudangs', function (Blueprint $table) {
             $table->id();
-            $table->bigIncrements('sampah_id')->onUpdate('cascade')->onDelete('cascade');
+            $table->interger('sampah_id');
             $table->decimal('berat');
             $table->timestamps();
         });

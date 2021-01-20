@@ -64,12 +64,12 @@ class MessageController extends Controller
         $user = auth()->user();
 
         // $from  = DB::select(users.id)
-        $role = Role::where('model_id', '!=', $user->id)->where('role_id', 3)->with(user)->get();
+        $role = Role::where('model_id', '!=', $user->id)->where('role_id', 3)->with('user')->get();
         // foreach ($role as $users) {
         //     $kontak = User::where('id', $users->model_id)->all();
             
         // }
         // $kontaks = $kontak->get();
-        return $this->sendResponse('success', 'this kontak Pengurus 1 for nasabah', $role, 200);
+        return $this->sendResponse('success', 'this kontak Pengurus 1 for nasabah', $role, 200);;
     }
 }

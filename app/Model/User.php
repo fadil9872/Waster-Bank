@@ -47,4 +47,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     public function role () {
         return $this->belongsTo('App\Model\Role', 'id', 'model_id');
     }
+    public function user () {
+        return $this->hasOne('App\Model\User');
+    }
 }

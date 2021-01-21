@@ -19,7 +19,7 @@ class Pengurus1Controller extends Controller
     {
         $user = auth()->user();
         $tanggal = Carbon::now()->toDateString();
-        $alamat     = Alamat::where('user_id')->where('status', 1)->first();
+        $alamat     = Alamat::where('user_id', $user->id)->where('status', 1)->first();
 
         $permintaan = Permintaan::where('wilayah_id', $alamat->wilayah_id)->orderBy('status', 'asc')->orderBy('id', 'desc')->get();
 

@@ -32,6 +32,12 @@ class UserController extends Controller
         }
 
         $user   = User::where('email', $request->email)->first();
+        $user->hasRole('admin');
+        if($user->hasRole('admin')) {
+            
+        }
+
+
         $role   = Role::where('model_id', $user->id)->first();
         $role   = $role->role_id;
 

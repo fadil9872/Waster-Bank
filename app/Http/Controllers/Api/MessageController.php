@@ -65,6 +65,7 @@ class MessageController extends Controller
 
         // $from  = DB::select(users.id)
         $role = Role::where('model_id', '!=', $user->id)->where('role_id', 3)->with('user')->get();
+
         // foreach ($role as $users) {
         //     $kontak = User::where('id', $users->model_id)->all();
             

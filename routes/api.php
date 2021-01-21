@@ -50,9 +50,10 @@ Route::group(['namespace' => 'Api', 'middleware' => ['jwt.verify', 'role:penguru
 });
 
 Route::group(['namespace' => 'Api', 'middleware' => ['jwt.verify', 'role:pengurus2']], function() {
-    // Route::
-    // Route::
-    // Route::
+    Route::post('pengurus2/penjualan', 'Pengurus2Controller@penjualan');
+    Route::get('pengurus2/get_penjualan', 'Pengurus2Controller@getPenjualanPengepul');
+    Route::get('pengurus2/get_gudang', 'Pengurus2Controller@getGudang');
     // Route::
     // Route::
 });
+

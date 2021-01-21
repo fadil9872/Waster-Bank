@@ -32,6 +32,14 @@ class SaldoSeeder extends Seeder
                 'user_id'   =>  5,
                 'saldo'     =>  0,  
             ],
+            [
+                'user_id'   =>  6,
+                'saldo'     =>  0,  
+            ],
+            [
+                'user_id'   =>  7,
+                'saldo'     =>  0,  
+            ],
         ]);
     }
 }

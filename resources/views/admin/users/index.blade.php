@@ -36,45 +36,48 @@
                         <th>No Telpon</th>
                         <th>Alamat</th>
                         <th>Role</th>
+                        <th>Wilayah</th>
                         <th>Status</th>
                     </tr>
                 </thead>
                 <tbody class="filter-box">
                     @foreach($users as $value)
                     <?php
-                    $alamat = App\Model\Alamat::where('user_id', $value->id)->where('status', 1)->first();
-                    $role   = App\Model\Role::where('model_id', $value->id)->first();
-
+                    $user   = App\Model\User::where('id', $value->model_id)->first();
+                    $alamat = App\Model\Alamat::where('user_id', $value->model_id)->where('status', 1)->first();
+                    // $role   = App\Model\Role::where('model_id', $value->id)->first();
+                    $wilayah= App\Model\Wilayah::where('id', $alamat->wilayah_id)->first();
 
                     ?>
 
                     <tr>
                         <td> {{ $loop->iteration}} </td>
-                        <td> {{ $value->name}} </td>
-                        <td> {{ $value->email}} </td>
-                        <td> {{ $value->no_telpon}} </td>
+                        <td> {{ $user->name}} </td>
+                        <td> {{ $user->email}} </td>
+                        <td> {{ $user->no_telpon}} </td>
                         <td> {{ $alamat->alamat}} </td>
+                        <td> {{ $wilayah->nama}} </td>
                         <td> <?php
-                            if ($role->role_id == 1) {
+                            if ($value->role_id == 1) {
                                 echo "admin";
-                            } else if ($role->role_id == 2) {
+                            } else if ($value->role_id == 2) {
                                 echo "Bendahara";
-                            } elseif ($role->role_id == 3) {
+                            } elseif ($value->role_id == 3) {
                                 echo "Costumer Service";
-                            } elseif ($role->role_id == 4) {
+                            } elseif ($value->role_id == 4) {
                                 echo "Pengurus 1";
-                            } elseif ($role->role_id == 5) {
+                            } elseif ($value->role_id == 5) {
                                 echo "Pengurus 2";
-                            } elseif ($role->role_id == 6) {
+                            } elseif ($value->role_id == 6) {
                                 echo "Nasabah";
                             }
                         ?> </td>
                         <td>
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalLabelUbah{{$value->id}}" title="Edit">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalLabelUbah{{$user->id}}" title="Edit">
                                 <i class="zmdi zmdi-edit"></i>
                             </button>
-                            <form action="sampah/delete/{{$value->id}}" method="post" class="d-inline" onsubmit="return confirm('yakin hapus data')">
+                            <form action="user/delete/{{$user->id}}" method="post" class="d-inline" onsubmit="return confirm('yakin hapus data')">
                                 @method('delete')
                                 @csrf
                                 <button class="btn btn-danger" data-toggle="modal" data-placement="top" title="Delete">
@@ -84,7 +87,7 @@
 
                         </td>
                         <!-- Modal Ubah -->
-                        <div class="modal fade" id="ModalLabelUbah{{$value->id}}" tabindex="-1" aria-labelledby="FontModalLabelUbah" aria-hidden="true">
+                        <div class="modal fade" id="ModalLabelUbah{{$user->id}}" tabindex="-1" aria-labelledby="FontModalLabelUbah" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -94,19 +97,31 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="sampah/update/{{$value->id}}" method="post">
+                                        <form action="user/update/{{$user->id}}" method="post">
                                             @method('patch')
                                             @csrf
                                             <div class="form-group row">
                                                 <label for="nama" class="col-sm-2 col-form-label">Nama</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="nama" value="{{$value->nama}}" name="nama">
+                                                    <input type="text" class="form-control" id="nama" value="{{$user->name}}" name="name">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="harga" class="col-sm-2 col-form-label">Price</label>
+                                                <label for="email" class="col-sm-2 col-form-label">Email</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="harga" value="{{$value->harga}}" name="harga">
+                                                    <input type="email" class="form-control" id="email" value="{{$user->email}}" name="email">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="no_telpon" class="col-sm-2 col-form-label">No Telpon</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="no_telpon" value="{{$user->no_telpon}}" name="no_telpon">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="role" class="col-sm-2 col-form-label">Role</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="role" value="{{$value->role_id}}" name="role">
                                                 </div>
                                             </div>
                                     </div>
@@ -147,7 +162,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="sampah/tambah" method="post">
+            <form action="user/tambah" method="post">
                 <div class="modal-body">
                     @csrf
                     <div class="form-group row">
@@ -157,9 +172,33 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="harga" class="col-sm-2 col-form-label">Price</label>
+                        <label for="email" class="col-sm-2 col-form-label">Email</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="harga" name="harga">
+                            <input type="email" class="form-control" id="email" name="email">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="password" class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="password" name="password">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="alamat" class="col-sm-2 col-form-label">Alamat</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="alamat" name="alamat">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="no_telpon" class="col-sm-2 col-form-label">No Telpon</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="no_telpon" name="no_telpon">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="wilayah_id" class="col-sm-2 col-form-label">Wilayah</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="wilayah_id" name="wilayah_id">
                         </div>
                     </div>
                 </div>

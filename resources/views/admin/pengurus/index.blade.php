@@ -1,6 +1,6 @@
 @extends('admin.layouts.dashboard')
 @section('here')
-<p>Nasabah</p>
+<p>Pengurus</p>
 @endsection
 
 @section('button')
@@ -30,7 +30,7 @@
             <table class="table table-borderless table-data3 text-center">
                 <thead>
                     <tr>
-                        <thc>No.</thc>
+                        <th>No.</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>No Telpon</th>
@@ -45,7 +45,7 @@
                     <?php
                     $user   = App\Model\User::where('id', $value->model_id)->first();
                     $alamat = App\Model\Alamat::where('user_id', $value->model_id)->where('status', 1)->first();
-                    $role   = App\Model\Role::where('model_id', $value->id)->first();
+                    // $role   = App\Model\Role::where('model_id', $value->id)->first();
                     $wilayah= App\Model\Wilayah::where('id', $alamat->wilayah_id)->first();
 
                     ?>
@@ -162,7 +162,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="sampah/tambah" method="post">
+            <form action="user/tambah" method="post">
                 <div class="modal-body">
                     @csrf
                     <div class="form-group row">
@@ -172,9 +172,39 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="harga" class="col-sm-2 col-form-label">Price</label>
+                        <label for="email" class="col-sm-2 col-form-label">Email</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="harga" name="harga">
+                            <input type="email" class="form-control" id="email" name="email">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="password" class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="password" name="password">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="alamat" class="col-sm-2 col-form-label">Alamat</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="alamat" name="alamat">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="role_id" class="col-sm-2 col-form-label">Role</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="role_id" name="role_id">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="no_telpon" class="col-sm-2 col-form-label">No Telpon</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="no_telpon" name="no_telpon">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="wilayah_id" class="col-sm-2 col-form-label">Wilayah</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="wilayah_id" name="wilayah_id">
                         </div>
                     </div>
                 </div>

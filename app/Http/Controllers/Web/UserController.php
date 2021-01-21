@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Model\Role;
 use App\Model\User;
 use Illuminate\Http\Request;
 
@@ -10,9 +11,10 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::with('alamat')->get();
+        $users = Role::where('role_id', 6)->get();
 
-        return view('admin.users.nasabah', compact('users', $users));
+
+        return view('admin.users.index', compact('users', $users));
     }
 
     public function create()

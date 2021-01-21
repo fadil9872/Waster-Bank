@@ -37,11 +37,13 @@ class UserController extends Controller
             
         }
 
+        $saldo = Saldo::where('user_id', $user->id)->first();
+
 
         $role   = Role::where('model_id', $user->id)->first();
         $role   = $role->role_id;
 
-        return response()->json(compact('token', 'user', 'role'));
+        return response()->json(compact('token', 'user', 'role', 'saldo'));
     }
 
     public function register(Request $request)
@@ -91,7 +93,7 @@ class UserController extends Controller
 
         // return response(['user'=> $user, 'access_token'=> $accessToken]);
 
-        return response()->json(compact('old_user', 'token', 'role'), 201);
+        return response()->json(compact('old_user', 'token', 'role', 'saldo'), 201);
     }
 
     public function profile()
@@ -183,7 +185,8 @@ class UserController extends Controller
         $role   = Role::where('model_id', $user->id)->first();
         $role   = $role->role_id;
         $alamat = Alamat::where('user_id', $user->id)->get();
-        $tanggal = Carbon::now()->toDateString();
+        $tanggal= Carbon::now()->toDateString();
+        $saldo  = Saldo::where('user_id', $user->id)->first();
         if ($role == 6) {
             
             $permintaan = Permintaan::where('user_id', $user->id)->get();
@@ -203,6 +206,7 @@ class UserController extends Controller
             'alamat'    =>  $alamat,
             'role'      =>  $role,
             'permintaan'=>  $permintaan,
+            'saldo'     =>  $saldo,
         ],200);
         // return $this->sendResponse('success', 'Data berhasi di tampilkan', $user, 200);
     }

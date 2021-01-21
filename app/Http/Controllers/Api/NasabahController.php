@@ -13,6 +13,7 @@ use Spatie\Permission\Traits\HasRoles;
 use App\Model\User;
 use App\Model\Saldo;
 use App\Model\Permintaan;
+use App\Model\Tabungan;
 use Carbon\Carbon;
 
 class NasabahController extends Controller
@@ -74,5 +75,12 @@ class NasabahController extends Controller
         $permintaan->delete();
 
         return $this->sendResponse('success', 'Data berhasil dihapus', NULL, 200);
+    }
+
+    public function tabungan() {
+        $user       = auth()->user();
+        $tabungan   = Tabungan::where('user_id', $user->id)->get();
+
+        return $this->sendResponse('success', 'ini data tabunganya', $tabungan, 200);
     }
 }

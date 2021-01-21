@@ -194,8 +194,7 @@ class UserController extends Controller
         } elseif ($role == 4) {
             $alamat_utama = Alamat::where('user_id', $user->id)->where('status', 1)->first();
             $permintaan = Permintaan::where('tanggal', $tanggal)->where('wilayah_id', $alamat_utama->wilayah_id)->get();
-        }
-
+        } 
         
         return response()->json([
             'status'    =>  'success',

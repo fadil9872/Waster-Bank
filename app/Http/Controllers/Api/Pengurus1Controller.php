@@ -10,6 +10,7 @@ use App\Model\Permintaan;
 use App\Model\Saldo;
 use App\Model\Sampah;
 use App\Model\Tabungan;
+use Carbon\Carbon;
 
 class Pengurus1Controller extends Controller
 {
@@ -18,6 +19,10 @@ class Pengurus1Controller extends Controller
         $tanggal = Carbon::now()->toDateString();
 
         $permintaan = Permintaan::where('status', 1)->where('tanggal', $tanggal)->get();
+
+        if (!$permintaan) {
+            return $this->sendResponse('error', 'belum ada permintaan hari ini', NULL, 200);
+        }
 
         return $this->sendResponse('success', 'Ini Data Permintaan', $permintaan, 200);
     }

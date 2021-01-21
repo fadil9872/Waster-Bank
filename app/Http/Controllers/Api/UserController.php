@@ -187,8 +187,13 @@ class UserController extends Controller
         if ($role == 6) {
             
             $permintaan = Permintaan::where('user_id', $user->id)->get();
+
+            if (!$permintaan) {
+                
+            }
         } elseif ($role == 4) {
-            $permintaan = Permintaan::where('tanggal', $tanggal)->where('wilayah_id', $alamat->wilayah_id)->get();
+            $alamat_utama = Alamat::where('user_id', $user->id)->where('status', 1)->first();
+            $permintaan = Permintaan::where('tanggal', $tanggal)->where('wilayah_id', $alamat_utama->wilayah_id)->get();
         }
 
         

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Model\Alamat;
 use App\Model\Gudang;
 use App\Model\Pendataan;
 use Illuminate\Http\Request;

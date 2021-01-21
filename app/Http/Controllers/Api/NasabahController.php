@@ -24,6 +24,7 @@ class NasabahController extends Controller
         $alamat     = Alamat::where('id', $request->alamat_id)->where('user_id', $user->id)->first();
 
         $tanggal    = Carbon::now()->toDateString();
+        // dd($tanggal);
 
         if (! $alamat) {
             return $this->sendResponse('error', 'alamat tidak ditemukan', NULL, 400);
@@ -37,7 +38,7 @@ class NasabahController extends Controller
             'wilayah_id'    =>  $alamat->wilayah_id,
             'no_telpon'     =>  $user->no_telpon,
             'keterangan'    =>  $request->keterangan,
-            'tanggal'       =>  $alamat,
+            'tanggal'       =>  $tanggal,
             'status'        =>  1,
         ]);
 

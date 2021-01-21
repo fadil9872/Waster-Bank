@@ -28,6 +28,12 @@ Route::get('user-page', function() {
     return 'Halaman untuk User';
 })->middleware('role:user')->name('user.page');
 // Route::group(['namesace' => 'Web', 'middleware' => 'role:admin'], function() {
+    //Pengurus
+    Route::get('admin/pengurus', 'Web\PengurusController@index');
+
+    //Nasabah
+    Route::get('admin/nasabah', 'Web\UserController@index');
+    //Sampah
     Route::get('admin', 'Web\AdminController@index');
     Route::get('admin/sampah', 'Web\AdminController@sampah');
     Route::post('admin/sampah/tambah', 'Web\AdminController@addSampah');

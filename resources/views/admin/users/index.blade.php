@@ -1,12 +1,12 @@
 @extends('admin.layouts.dashboard')
 @section('here')
-<p>Sampah</p>
+<p>Nasabah</p>
 @endsection
 
 @section('button')
 <!-- Button trigger modal -->
 <button type="button" class="au-btn au-btn-icon au-btn--green" data-toggle="modal" data-target="#ModalLabelTambah">
-    <i class="zmdi zmdi-plus"></i>add item
+    <i class="zmdi zmdi-plus"></i>add value
 </button>
 
 @endsection
@@ -32,24 +32,49 @@
                     <tr>
                         <th>No.</th>
                         <th>Name</th>
-                        <th>Harga Nasabah</th>
-                        <th>Harga Pengepul</th>
-                        <th class="col-4">Status</th>
+                        <th>Email</th>
+                        <th>No Telpon</th>
+                        <th>Alamat</th>
+                        <th>Role</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody class="filter-box">
-                    @foreach($sampah as $item)
+                    @foreach($users as $value)
+                    <?php
+                    $alamat = App\Model\Alamat::where('user_id', $value->id)->where('status', 1)->first();
+                    $role   = App\Model\Role::where('model_id', $value->id)->first();
+
+
+                    ?>
+
                     <tr>
                         <td> {{ $loop->iteration}} </td>
-                        <td> {{ $item->nama}} </td>
-                        <td> {{ $item->harga_nasabah}} </td>
-                        <td> {{ $item->harga_pengepul}} </td>
-                        <td class="col-4">
+                        <td> {{ $value->name}} </td>
+                        <td> {{ $value->email}} </td>
+                        <td> {{ $value->no_telpon}} </td>
+                        <td> {{ $alamat->alamat}} </td>
+                        <td> <?php
+                            if ($role->role_id == 1) {
+                                echo "admin";
+                            } else if ($role->role_id == 2) {
+                                echo "Bendahara";
+                            } elseif ($role->role_id == 3) {
+                                echo "Costumer Service";
+                            } elseif ($role->role_id == 4) {
+                                echo "Pengurus 1";
+                            } elseif ($role->role_id == 5) {
+                                echo "Pengurus 2";
+                            } elseif ($role->role_id == 6) {
+                                echo "Nasabah";
+                            }
+                        ?> </td>
+                        <td>
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalLabelUbah{{$item->id}}" title="Edit">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalLabelUbah{{$value->id}}" title="Edit">
                                 <i class="zmdi zmdi-edit"></i>
                             </button>
-                            <form action="sampah/delete/{{$item->id}}" method="post" class="d-inline" onsubmit="return confirm('yakin hapus data')">
+                            <form action="sampah/delete/{{$value->id}}" method="post" class="d-inline" onsubmit="return confirm('yakin hapus data')">
                                 @method('delete')
                                 @csrf
                                 <button class="btn btn-danger" data-toggle="modal" data-placement="top" title="Delete">
@@ -59,7 +84,7 @@
 
                         </td>
                         <!-- Modal Ubah -->
-                        <div class="modal fade" id="ModalLabelUbah{{$item->id}}" tabindex="-1" aria-labelledby="FontModalLabelUbah" aria-hidden="true">
+                        <div class="modal fade" id="ModalLabelUbah{{$value->id}}" tabindex="-1" aria-labelledby="FontModalLabelUbah" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -69,19 +94,19 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="sampah/update/{{$item->id}}" method="post">
+                                        <form action="sampah/update/{{$value->id}}" method="post">
                                             @method('patch')
                                             @csrf
                                             <div class="form-group row">
                                                 <label for="nama" class="col-sm-2 col-form-label">Nama</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="nama" value="{{$item->nama}}" name="nama">
+                                                    <input type="text" class="form-control" id="nama" value="{{$value->nama}}" name="nama">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="harga" class="col-sm-2 col-form-label">Price</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="harga" value="{{$item->harga}}" name="harga">
+                                                    <input type="text" class="form-control" id="harga" value="{{$value->harga}}" name="harga">
                                                 </div>
                                             </div>
                                     </div>

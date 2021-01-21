@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Model\User;
 use Illuminate\Http\Request;
 
-class BendaharaController extends Controller
+class UserController extends Controller
 {
     public function index()
     {
-        //
+        $users = User::with('alamat')->get();
+
+        return view('admin.users.nasabah', compact('users', $users));
     }
 
     public function create()

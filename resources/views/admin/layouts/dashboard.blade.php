@@ -34,6 +34,10 @@
     <!-- Main CSS-->
     <link href="{{ asset('css/theme.css') }}" rel="stylesheet" media="all">
 
+    <style>
+        @yield('css');
+    </style>
+
 </head>
 
 <body>
@@ -231,24 +235,16 @@
     </div>
 
     <script>
-        // function search_box(cari) {
-        //     var value = cari.toLowerCase();
-        //     $(".filter-box tr").filter(function() {
-        //         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        //     });
-        //     console.log(
-        //         $(this).text().toLowerCase()
-        //     );
-        // }
-        $.ajax({
-            type: "post",
-            url: "view/admin/",
-            data: "data",
-            dataType: "dataType",
-            success: function (response) {
-                
-            }
-        });
+        function search_box(cari) {
+            var value = cari.toLowerCase();
+            $(".filter-box tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+            console.log(
+                $(this).text().toLowerCase()
+            );
+        }
+
     </script>
 
 

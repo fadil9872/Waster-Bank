@@ -1,12 +1,12 @@
 @extends('admin.layouts.dashboard')
 @section('here')
-<p>Sampah</p>
+<p>Nasabah</p>
 @endsection
 
 @section('button')
 <!-- Button trigger modal -->
 <button type="button" class="au-btn au-btn-icon au-btn--green" data-toggle="modal" data-target="#ModalLabelTambah">
-    <i class="zmdi zmdi-plus"></i>add item
+    <i class="zmdi zmdi-plus"></i>add value
 </button>
 
 @endsection
@@ -30,26 +30,54 @@
             <table class="table table-borderless table-data3 text-center">
                 <thead>
                     <tr>
-                        <th>No.</th>
+                        <thc>No.</thc>
                         <th>Name</th>
-                        <th>Harga Nasabah</th>
-                        <th>Harga Pengepul</th>
-                        <th class="col-4">Status</th>
+                        <th>Email</th>
+                        <th>No Telpon</th>
+                        <th>Alamat</th>
+                        <th>Role</th>
+                        <th>Wilayah</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody class="filter-box">
-                    @foreach($sampah as $item)
+                    @foreach($users as $value)
+                    <?php
+                    $user   = App\Model\User::where('id', $value->model_id)->first();
+                    $alamat = App\Model\Alamat::where('user_id', $value->model_id)->where('status', 1)->first();
+                    $role   = App\Model\Role::where('model_id', $value->id)->first();
+                    $wilayah= App\Model\Wilayah::where('id', $alamat->wilayah_id)->first();
+
+                    ?>
+
                     <tr>
                         <td> {{ $loop->iteration}} </td>
-                        <td> {{ $item->nama}} </td>
-                        <td> {{ $item->harga_nasabah}} </td>
-                        <td> {{ $item->harga_pengepul}} </td>
-                        <td class="col-4">
+                        <td> {{ $user->name}} </td>
+                        <td> {{ $user->email}} </td>
+                        <td> {{ $user->no_telpon}} </td>
+                        <td> {{ $alamat->alamat}} </td>
+                        <td> {{ $wilayah->nama}} </td>
+                        <td> <?php
+                            if ($value->role_id == 1) {
+                                echo "admin";
+                            } else if ($value->role_id == 2) {
+                                echo "Bendahara";
+                            } elseif ($value->role_id == 3) {
+                                echo "Costumer Service";
+                            } elseif ($value->role_id == 4) {
+                                echo "Pengurus 1";
+                            } elseif ($value->role_id == 5) {
+                                echo "Pengurus 2";
+                            } elseif ($value->role_id == 6) {
+                                echo "Nasabah";
+                            }
+                        ?> </td>
+                        <td>
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalLabelUbah{{$item->id}}" title="Edit">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalLabelUbah{{$user->id}}" title="Edit">
                                 <i class="zmdi zmdi-edit"></i>
                             </button>
-                            <form action="sampah/delete/{{$item->id}}" method="post" class="d-inline" onsubmit="return confirm('yakin hapus data')">
+                            <form action="user/delete/{{$user->id}}" method="post" class="d-inline" onsubmit="return confirm('yakin hapus data')">
                                 @method('delete')
                                 @csrf
                                 <button class="btn btn-danger" data-toggle="modal" data-placement="top" title="Delete">
@@ -59,7 +87,7 @@
 
                         </td>
                         <!-- Modal Ubah -->
-                        <div class="modal fade" id="ModalLabelUbah{{$item->id}}" tabindex="-1" aria-labelledby="FontModalLabelUbah" aria-hidden="true">
+                        <div class="modal fade" id="ModalLabelUbah{{$user->id}}" tabindex="-1" aria-labelledby="FontModalLabelUbah" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -69,19 +97,31 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="sampah/update/{{$item->id}}" method="post">
+                                        <form action="user/update/{{$user->id}}" method="post">
                                             @method('patch')
                                             @csrf
                                             <div class="form-group row">
                                                 <label for="nama" class="col-sm-2 col-form-label">Nama</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="nama" value="{{$item->nama}}" name="nama">
+                                                    <input type="text" class="form-control" id="nama" value="{{$user->name}}" name="name">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="harga" class="col-sm-2 col-form-label">Price</label>
+                                                <label for="email" class="col-sm-2 col-form-label">Email</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="harga" value="{{$item->harga}}" name="harga">
+                                                    <input type="email" class="form-control" id="email" value="{{$user->email}}" name="email">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="no_telpon" class="col-sm-2 col-form-label">No Telpon</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="no_telpon" value="{{$user->no_telpon}}" name="no_telpon">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="role" class="col-sm-2 col-form-label">Role</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="role" value="{{$value->role_id}}" name="role">
                                                 </div>
                                             </div>
                                     </div>

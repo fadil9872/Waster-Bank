@@ -16,9 +16,11 @@ class Pengurus1Controller extends Controller
 {
     public function get_permintaan()
     {
+        $user = auth()->user();
         $tanggal = Carbon::now()->toDateString();
+        $alamat     = Alamat::where('user_id')->where('status', 1)->first();
 
-        $permintaan = Permintaan::orderBy('id', 'desc')->get();
+        $permintaan = Permintaan::where('wilayah_id', $alamat->wilayah_id)->orderBy('status', 'asc')->orderBy('id', 'desc')->get();
 
         if (!$permintaan) {
             return $this->sendResponse('error', 'belum ada permintaan hari ini', NULL, 200);

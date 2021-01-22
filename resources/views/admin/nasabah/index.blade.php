@@ -1,6 +1,6 @@
 @extends('admin.layouts.dashboard')
 @section('here')
-<p>Pengurus</p>
+<p>Nasabah</p>
 @endsection
 
 @section('button')
@@ -46,7 +46,7 @@
                     $user   = App\Model\User::where('id', $value->model_id)->first();
                     $alamat = App\Model\Alamat::where('user_id', $value->model_id)->where('status', 1)->first();
                     // $role   = App\Model\Role::where('model_id', $value->id)->first();
-                    $wilayah= App\Model\Wilayah::where('id', $alamat->wilayah_id)->first();
+                    $wilayah = App\Model\Wilayah::where('id', $alamat->wilayah_id)->first();
 
                     ?>
 
@@ -57,27 +57,27 @@
                         <td> {{ $user->no_telpon}} </td>
                         <td> {{ $alamat->alamat}} </td>
                         <td> <?php
-                            if ($value->role_id == 1) {
-                                echo "admin";
-                            } else if ($value->role_id == 2) {
-                                echo "Bendahara";
-                            } elseif ($value->role_id == 3) {
-                                echo "Costumer Service";
-                            } elseif ($value->role_id == 4) {
-                                echo "Pengurus 1";
-                            } elseif ($value->role_id == 5) {
-                                echo "Pengurus 2";
-                            } elseif ($value->role_id == 6) {
-                                echo "Nasabah";
-                            }
-                        ?> </td>
+                                if ($value->role_id == 1) {
+                                    echo "admin";
+                                } else if ($value->role_id == 2) {
+                                    echo "Bendahara";
+                                } elseif ($value->role_id == 3) {
+                                    echo "Costumer Service";
+                                } elseif ($value->role_id == 4) {
+                                    echo "Pengurus 1";
+                                } elseif ($value->role_id == 5) {
+                                    echo "Pengurus 2";
+                                } elseif ($value->role_id == 6) {
+                                    echo "Nasabah";
+                                }
+                                ?> </td>
                         <td> {{ $wilayah->nama}} </td>
-                        <td class="d-flex">
+                        <td>
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalLabelUbah{{$user->id}}" title="Edit">
                                 <i class="zmdi zmdi-edit"></i>
                             </button>
-                            <form action="user/delete/{{$user->id}}" method="post" class="d-inline ml-2" onsubmit="return confirm('yakin hapus data')">
+                            <form action="user/delete/{{$user->id}}" method="post" class="d-inline" onsubmit="return confirm('yakin hapus data')">
                                 @method('delete')
                                 @csrf
                                 <button class="btn btn-danger" data-toggle="modal" data-placement="top" title="Delete">
@@ -85,6 +85,10 @@
                                 </button>
                             </form>
 
+                            <a class="btn btn-warning" href="tabungan/nasabah/{{$user->id}}">
+                                <i class="zmdi zmdi-delete"></i>
+
+                            </a>
                         </td>
                         <!-- Modal Ubah -->
                         <div class="modal fade" id="ModalLabelUbah{{$user->id}}" tabindex="-1" aria-labelledby="FontModalLabelUbah" aria-hidden="true">
@@ -187,12 +191,6 @@
                         <label for="alamat" class="col-sm-2 col-form-label">Alamat</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="alamat" name="alamat">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="role_id" class="col-sm-2 col-form-label">Role</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="role_id" name="role_id">
                         </div>
                     </div>
                     <div class="form-group row">

@@ -14,7 +14,7 @@ class UserController extends Controller
         $users = Role::where('role_id', 6)->get();
 
 
-        return view('admin.users.index', compact('users', $users));
+        return view('admin.nasabah.index', compact('users', $users));
     }
 
     public function create()

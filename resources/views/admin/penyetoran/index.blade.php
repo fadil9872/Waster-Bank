@@ -1,6 +1,6 @@
 @extends('admin.layouts.dashboard')
 @section('here')
-<p>Pengurus</p>
+<p>Penyetoran</p>
 @endsection
 
 @section('button')
@@ -30,48 +30,38 @@
             <table class="table table-borderless table-data3 text-center">
                 <thead>
                     <tr>
-                        <th>No.</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>No Telpon</th>
-                        <th>Alamat</th>
-                        <th>Role</th>
-                        <th>Wilayah</th>
-                        <th>Status</th>
+                        <th class="">No.</th>
+                        <th class="">User_id</th>
+                        <th class="">Pengurus1</th>
+                        <th class="">PermintaanId</th>
+                        <th class="">Keterangan</th>
+                        <th class="">Sampah</th>
+                        <th class="">Berat</th>
+                        <th class="">Debit</th>
+                        <th class="">Wilayah</th>
                     </tr>
                 </thead>
                 <tbody class="filter-box">
-                    @foreach($users as $value)
+                    @foreach($penyetoran as $value)
                     <?php
-                    $user   = App\Model\User::where('id', $value->model_id)->first();
-                    $alamat = App\Model\Alamat::where('user_id', $value->model_id)->where('status', 1)->first();
+                    $user   = App\Model\User::where('id', $value->user_id)->first();
+                    $alamat = App\Model\Alamat::where('user_id', $value->pengurus1_id)->where('status', 1)->first();
                     // $role   = App\Model\Role::where('model_id', $value->id)->first();
                     $wilayah= App\Model\Wilayah::where('id', $alamat->wilayah_id)->first();
+                    $sampah = App\Model\Sampah::where('id', $value->sampah_id)->first();
 
                     ?>
 
                     <tr>
-                        <td> {{ $loop->iteration}} </td>
-                        <td> {{ $user->name}} </td>
-                        <td> {{ $user->email}} </td>
-                        <td> {{ $user->no_telpon}} </td>
-                        <td> {{ $alamat->alamat}} </td>
-                        <td> <?php
-                            if ($value->role_id == 1) {
-                                echo "admin";
-                            } else if ($value->role_id == 2) {
-                                echo "Bendahara";
-                            } elseif ($value->role_id == 3) {
-                                echo "Costumer Service";
-                            } elseif ($value->role_id == 4) {
-                                echo "Pengurus 1";
-                            } elseif ($value->role_id == 5) {
-                                echo "Pengurus 2";
-                            } elseif ($value->role_id == 6) {
-                                echo "Nasabah";
-                            }
-                        ?> </td>
-                        <td> {{ $wilayah->nama}} </td>
+                        <td class="col-1"> {{ $loop->iteration}} </td>
+                        <td class="col-1"> {{ $value->user_id}} </td>
+                        <td class="col-1"> {{ $value->pengurus1_id}} </td>
+                        <td class="col-1"> {{ $value->no_telpon}} </td>
+                        <td class="col-1"> {{ $value->permintaan_id}} </td>
+                        <td class="col-1"> {{ $sampah->nama}} </td>
+                        <td class="col-1"> {{ $value->berat}} </td>
+                        <td class="col-1"> {{ $value->debit}} </td>
+                        <td class="col-1"> {{ $wilayah->nama}} </td>
                         <td class="d-flex">
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalLabelUbah{{$user->id}}" title="Edit">

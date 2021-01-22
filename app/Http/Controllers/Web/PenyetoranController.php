@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Model\Pendataan;
 use Illuminate\Http\Request;
 
 class PenyetoranController extends Controller
 {
     public function index()
     {
-        //
+        $penyetoran = Pendataan::get();
+
+        return view('admin.penyetoran.index', compact('penyetoran', $penyetoran));
     }
 
     public function create()

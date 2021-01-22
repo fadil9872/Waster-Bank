@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Model\Tabungan;
 use Illuminate\Http\Request;
 
 class TabunganController extends Controller
 {
-    public function index()
+    public function index($id)
     {
-        //
+        $users   = Tabungan::where('user_id', $id)->get();
+
+        return view('admin.tabungan.index', compact('users', $users));
     }
 
     public function create()

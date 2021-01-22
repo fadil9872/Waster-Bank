@@ -1,6 +1,6 @@
 @extends('admin.layouts.dashboard')
 @section('here')
-<p>Nasabah</p>
+<p>Pengurus</p>
 @endsection
 
 @section('button')
@@ -15,7 +15,7 @@
 @if (session('status'))
 
 
-<div class="alert alert-success alert-dismissible fade show" role="alert">
+<div class="alert alert-success alert-dismissible fade show" kredit="alert">
     {{ session('status') }}
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -32,52 +32,34 @@
                     <tr>
                         <th>No.</th>
                         <th>Name</th>
-                        <th>Email</th>
-                        <th>No Telpon</th>
-                        <th>Alamat</th>
-                        <th>Role</th>
-                        <th>Wilayah</th>
+                        <th>Keterangan</th>
+                        <th>Debit</th>
+                        <th>Kredit</th>
                         <th>Status</th>
                     </tr>
                 </thead>
                 <tbody class="filter-box">
                     @foreach($users as $value)
                     <?php
-                    $user   = App\Model\User::where('id', $value->model_id)->first();
+                    $user   = App\Model\User::where('id', $value->user_id)->first();
                     $alamat = App\Model\Alamat::where('user_id', $value->model_id)->where('status', 1)->first();
-                    // $role   = App\Model\Role::where('model_id', $value->id)->first();
-                    $wilayah= App\Model\Wilayah::where('id', $alamat->wilayah_id)->first();
+                    // $kredit   = App\Model\Role::where('model_id', $value->id)->first();
+                    // $wilayah= App\Model\Wilayah::where('id', $alamat->wilayah_id)->first();
 
                     ?>
 
                     <tr>
                         <td> {{ $loop->iteration}} </td>
                         <td> {{ $user->name}} </td>
-                        <td> {{ $user->email}} </td>
-                        <td> {{ $user->no_telpon}} </td>
-                        <td> {{ $alamat->alamat}} </td>
-                        <td> {{ $wilayah->nama}} </td>
-                        <td> <?php
-                            if ($value->role_id == 1) {
-                                echo "admin";
-                            } else if ($value->role_id == 2) {
-                                echo "Bendahara";
-                            } elseif ($value->role_id == 3) {
-                                echo "Costumer Service";
-                            } elseif ($value->role_id == 4) {
-                                echo "Pengurus 1";
-                            } elseif ($value->role_id == 5) {
-                                echo "Pengurus 2";
-                            } elseif ($value->role_id == 6) {
-                                echo "Nasabah";
-                            }
-                        ?> </td>
+                        <td> {{ $value->keterangan}} </td>
+                        <td> {{ $value->debit}} </td>
+                        <td> {{ $value->kredit}} </td>
                         <td>
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalLabelUbah{{$user->id}}" title="Edit">
                                 <i class="zmdi zmdi-edit"></i>
                             </button>
-                            <form action="user/delete/{{$user->id}}" method="post" class="d-inline" onsubmit="return confirm('yakin hapus data')">
+                            <form action="user/delete/{{$user->id}}" method="post" class="d-inline ml-2" onsubmit="return confirm('yakin hapus data')">
                                 @method('delete')
                                 @csrf
                                 <button class="btn btn-danger" data-toggle="modal" data-placement="top" title="Delete">
@@ -101,27 +83,27 @@
                                             @method('patch')
                                             @csrf
                                             <div class="form-group row">
-                                                <label for="nama" class="col-sm-2 col-form-label">Nama</label>
+                                                <label for="keterangan" class="col-sm-2 col-form-label">Keterangan</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="nama" value="{{$user->name}}" name="name">
+                                                    <input type="text" class="form-control" id="keterangan" value="{{$user->name}}" name="name">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="email" class="col-sm-2 col-form-label">Email</label>
+                                                <label for="keterangan" class="col-sm-2 col-form-label">Keterangan</label>
                                                 <div class="col-sm-10">
-                                                    <input type="email" class="form-control" id="email" value="{{$user->email}}" name="email">
+                                                    <input type="text" class="form-control" id="keterangan" value="{{$value->keterangan}}" name="name">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="no_telpon" class="col-sm-2 col-form-label">No Telpon</label>
+                                                <label for="debit" class="col-sm-2 col-form-label">Debit</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="no_telpon" value="{{$user->no_telpon}}" name="no_telpon">
+                                                    <input type="text" class="form-control" id="debit" value="{{$value->debit}}" name="debit">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="role" class="col-sm-2 col-form-label">Role</label>
+                                                <label for="kredit" class="col-sm-2 col-form-label">Kredit</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="role" value="{{$value->role_id}}" name="role">
+                                                    <input type="text" class="form-control" id="kredit" value="{{$value->kredit}}" name="kredit">
                                                 </div>
                                             </div>
                                     </div>
@@ -166,39 +148,27 @@
                 <div class="modal-body">
                     @csrf
                     <div class="form-group row">
-                        <label for="nama" class="col-sm-2 col-form-label">Nama</label>
+                        <label for="user_id" class="col-sm-2 col-form-label">Nama</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="nama" name="nama">
+                            <input type="text" class="form-control" id="user_id" name="user_id">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="email" class="col-sm-2 col-form-label">Email</label>
+                        <label for="keterangan" class="col-sm-2 col-form-label">Keterangan</label>
                         <div class="col-sm-10">
-                            <input type="email" class="form-control" id="email" name="email">
+                            <input type="text" class="form-control" id="keterangan" name="keterangan">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="password" class="col-sm-2 col-form-label">Password</label>
+                        <label for="debit" class="col-sm-2 col-form-label">Debit</label>
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="password" name="password">
+                            <input type="text" class="form-control" id="debit" name="debit">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="alamat" class="col-sm-2 col-form-label">Alamat</label>
+                        <label for="kredit" class="col-sm-2 col-form-label">Kredit</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="alamat" name="alamat">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="no_telpon" class="col-sm-2 col-form-label">No Telpon</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="no_telpon" name="no_telpon">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="wilayah_id" class="col-sm-2 col-form-label">Wilayah</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="wilayah_id" name="wilayah_id">
+                            <input type="text" class="form-control" id="kredit" name="kredit">
                         </div>
                     </div>
                 </div>

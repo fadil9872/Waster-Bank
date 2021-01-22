@@ -132,4 +132,10 @@ class Pengurus1Controller extends Controller
             'saldo user'=>  $saldo_tabungan,
         ], 200);
     }
+
+    public function get_sampah() {
+        $sampah = Sampah::get();
+
+        return $this->sendResponse('success', 'ini data sampahnya', $sampah, 200);
+    }
 }

@@ -47,6 +47,7 @@ Route::group(['namespace' => 'Api','middleware' => ['jwt.verify', 'role:nasabah'
 
 Route::group(['namespace' => 'Api', 'middleware' => ['jwt.verify', 'role:pengurus1']], function() {
     Route::get('pengurus1/get_permintaan', 'Pengurus1Controller@get_permintaan');
+    Route::get('pengurus1/get_sampah', 'Pengurus1Controller@get_sampah');
     Route::post('pengurus1/pendataan/{id}', 'Pengurus1Controller@pendataanJemput');
 });
 

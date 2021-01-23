@@ -73,4 +73,8 @@ class MessageController extends Controller
         // $kontaks = $kontak->get();
         return $this->sendResponse('success', 'this kontak Pengurus 1 for nasabah', $role, 200);;
     }
+
+    public function indexCostumer() {
+        
+    }
 }

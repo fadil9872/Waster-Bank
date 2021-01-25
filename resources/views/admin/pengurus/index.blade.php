@@ -97,7 +97,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="user/update/{{$user->id}}" method="post">
+                                        <form action="pengurus/update/{{$user->id}}" method="post">
                                             @method('patch')
                                             @csrf
                                             <div class="form-group row">
@@ -162,7 +162,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="user/tambah" method="post">
+            <form action="pengurus/tambah" method="post">
                 <div class="modal-body">
                     @csrf
                     <div class="form-group row">

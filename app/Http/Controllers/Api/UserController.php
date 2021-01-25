@@ -187,17 +187,17 @@ class UserController extends Controller
         $alamat = Alamat::where('user_id', $user->id)->get();
         $tanggal= Carbon::now()->toDateString();
         $saldo  = Saldo::where('user_id', $user->id)->first();
+        $permintaan = null;
         if ($role == 6) {
             
             $permintaan = Permintaan::where('user_id', $user->id)->get();
 
-            if (!$permintaan) {
-                
-            }
         } elseif ($role == 4) {
             $alamat_utama = Alamat::where('user_id', $user->id)->where('status', 1)->first();
             $permintaan = Permintaan::where('tanggal', $tanggal)->where('wilayah_id', $alamat_utama->wilayah_id)->get();
-        } 
+        } elseif ($role == 5) {
+            
+        }
         
         return response()->json([
             'status'    =>  'success',

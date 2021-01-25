@@ -31,11 +31,15 @@ Route::get('user-page', function() {
 
     //Pengurus
     Route::get('admin/pengurus', 'Web\PengurusController@index');
-
+    Route::post('admin/pengurus/tambah', 'Web\PengurusController@store');
+    Route::post('admin/pengurus/update/{id}', 'Web\PengurusController@update');
+    
     //Nasabah
     Route::get('admin/nasabah', 'Web\UserController@index');
-
+    Route::patch('admin/nasabah/update/{id}', 'Web\PengurusController@update');
+    
     Route::get('admin/tabungan/nasabah/{id}', 'Web\TabunganController@index');
+    Route::patch('admin/nasabah/tambah', 'Web\PengurusController@store');
 
     //Penyetoran OR Pendataan
     Route::get('admin/penyetoran', 'Web\PenyetoranController@index');

@@ -51,6 +51,9 @@ Route::get('user-page', function() {
     Route::patch('admin/sampah/update/{id}', 'Web\AdminController@ubahSampah');
     Route::delete('admin/sampah/delete/{id}', 'Web\AdminController@hapusSampah');
     Route::get('admin/sampah/cari', 'Web\AdminController@cari');
+    Route::get('cs/chat', function() {
+        return view('cs/chat/index');
+    });
 // });
 
 Route::get('/ajax', function () {

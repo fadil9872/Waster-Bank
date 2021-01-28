@@ -40,7 +40,7 @@ class Pengurus2Controller extends Controller
             $gudang = Gudang::where('id', $pendataan['gudang_id'])->first();
     
             //pengurangan di gudang
-            $pengurangan = $gudang->berat - $request->berat; 
+            $pengurangan = $gudang->berat - $pendataan['berat']; 
             //penjumlahan sampah 
             $sampah = Sampah::where('id', $gudang->sampah_id)->first();
     
@@ -60,6 +60,11 @@ class Pengurus2Controller extends Controller
             
             $saldo_bank->saldo = $saldo_bank->saldo + $pendapatan;
             $saldo_bank->update();
+
+
+            $gudang->update([
+                'berat'     => $pengurangan,
+            ]);
         }
         
         return $this->sendResponse('success', 'Pendataan Penjualan Berhasil dibuat', $penjualan, 200);

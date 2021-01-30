@@ -34,7 +34,7 @@ class Pengurus2Controller extends Controller
 
         foreach ($pendataan as $pendataan) {
             //cari saldo milik bank 
-            $saldo_bank =  Saldo::where('user_id', $user->id)->first();
+            $saldo_bank =  Saldo::where('user_id', $bendahara->model_id)->first();
             
             //gudang
             $gudang = Gudang::where('id', $pendataan['gudang_id'])->first();
@@ -43,8 +43,9 @@ class Pengurus2Controller extends Controller
             $pengurangan = $gudang->berat - $pendataan['berat']; 
             //penjumlahan sampah 
             $sampah = Sampah::where('id', $gudang->sampah_id)->first();
-    
-            $pendapatan = $sampah->harga_pengepul * $request->berat;
+            
+            $pendapatan = $sampah->harga_pengepul * $pendataan['berat'];
+            // dd($pendapatan);
     
             $penjualan = Penjualan::create([
                 'pengurus2_id'  => $user->id,
@@ -57,7 +58,7 @@ class Pengurus2Controller extends Controller
             $gudang->berat = $pengurangan;
             $gudang->update();
     
-            
+            // dd($pendapatan);
             $saldo_bank->saldo = $saldo_bank->saldo + $pendapatan;
             $saldo_bank->update();
 

@@ -3,49 +3,24 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Model\Pendataan;
+use App\Model\Penjualan;
+use App\Model\Role;
+use App\Model\Saldo;
 use App\Model\Sampah;
+use App\Model\User;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    public function index() {
-        return view('admin.index');
+    public function index ()
+    {
+        $user       = User::get()->count();
+        $users      = Role::where('role_id', 2)->first();
+        $saldo_bank = Saldo::where('id', $users->model_id)->first();
+        $penjualan  = Penjualan::get()->count();
+        $pendataan  = Pendataan::get()->count();
+        return view('admin.index', compact('saldo_bank', 'user', 'penjualan', 'pendataan'));
+
     }
-    public function sampah() {
-        $sampah = Sampah::get();
-        return view('admin.sampah.index', compact('sampah'));
-    }
-    public function addSampah(Request $request) {
-        $sampah = Sampah::create([
-            'nama'  =>  $request->nama,
-            'harga' =>  $request->harga,
-        ]);
-
-        return redirect('admin/sampah')->with('status', 'Barang berhasil ditambah');
-    }
-    
-    public function ubahSampah(Request $request, $id) {
-        $old_sampah = Sampah::where('id', $id)->first();
-        $new_sampah = $old_sampah->update([
-            'nama'  =>  $request->nama,
-            'harga' =>  $request->harga,
-        ]);
-
-        return redirect('admin/sampah')->with('status', 'Barang berhasil update');
-    }
-
-    public function hapusSampah($id) {
-        $old_sampah = Sampah::where('id', $id)->first();
-
-        $old_sampah->delete();
-
-        return redirect('admin/sampah')->with('status', 'Barang berhasil dihapus');
-    }
-
-    public function cari(Request $request) {
-        $nama = $request->nama;
-        $sampahs = Sampah::where('nama','like',"%".$nama."%")->paginate(5);
-        return view('admin.sampah.cari',compact('sampahs'));
-    }
-
 }

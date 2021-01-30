@@ -79,25 +79,51 @@ class MessageController extends Controller
 
         // }
         // $kontaks = $kontak->get();
-        return $this->sendResponse('success', 'this kontak Pengurus 1 for nasabah', $role, 200);;
+        return $this->sendResponse('success', 'this kontak Costumer Service for Nasabah', $role, 200);;
     }
 
-    public function indexNasabah()
+    public function addindexCs()
+    {
+        $user = auth()->user();
+
+        // $from  = DB::select(users.id)
+        $role = Role::where('model_id', '!=', $user->id)->where('role_id', 6)->with('user')->get();
+
+        // foreach ($role as $users) {
+        //     $kontak = User::where('id', $users->model_id)->all();
+
+        // }
+        // $kontaks = $kontak->get();
+        return $this->sendResponse('success', 'this kontak Nasabah for Costumer Service', $role, 200);;
+    }
+
+    public function indexKontak()
     {
         $user = auth()->user();
 
         $from = User::select('users.id', 'users.name', 'users.avatar')->distinct()
             ->join('messages', 'users.id', '=', 'messages.from')
             ->where('users.id', '!=', $user->id)
+            ->where('messages.to', '=', $user->id)    
+            ->get()->toArray();
+
+        $to   = User::select('users.id', 'users.name', 'users.avatar')->distinct()
+            ->join('messages', 'users.id', '=', 'messages.to')
+            ->where('users.id', '!=', $user->id)
             ->where('messages.from', '=', $user->id)    
             ->get()->toArray();
 
-
-
-        $data = array_unique($from, SORT_REGULAR);
+        $data = array_merge($from, $to);
+        
+        $data = array_unique($data, SORT_REGULAR);
         $kontak = array_values($data);
 
 
-        return $kontak;
+        return response()->json([
+            'status'    => 'success',
+            'message'   => 'ini kontaknya',
+            'data'      => $kontak,
+        ]);
     }
+
 }

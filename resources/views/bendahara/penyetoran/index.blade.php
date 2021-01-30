@@ -1,4 +1,4 @@
-@extends('admin.layouts.dashboard')
+@extends('bendahara.layouts.dashboard')
 @section('here')
 <p>Penyetoran</p>
 @endsection

@@ -23,37 +23,21 @@
                 <thead>
                     <tr>
                         <th class="">No.</th>
-                        <th class="">User_id</th>
-                        <th class="">Pengurus1</th>
-                        <th class="">PermintaanId</th>
-                        <th class="">Keterangan</th>
-                        <th class="">Sampah</th>
+                        <th class="">Nama</th>
                         <th class="">Berat</th>
-                        <th class="">Debit</th>
-                        <th class="">Wilayah</th>
                     </tr>
                 </thead>
                 <tbody class="filter-box">
-                    @foreach($penyetoran as $value)
+                    @foreach($gudang as $value)
                     <?php
-                    $user   = App\Model\User::where('id', $value->user_id)->first();
-                    $alamat = App\Model\Alamat::where('user_id', $value->pengurus1_id)->where('status', 1)->first();
-                    // $role   = App\Model\Role::where('model_id', $value->id)->first();
-                    $wilayah= App\Model\Wilayah::where('id', $alamat->wilayah_id)->first();
                     $sampah = App\Model\Sampah::where('id', $value->sampah_id)->first();
 
                     ?>
 
                     <tr>
                         <td class="col-1"> {{ $loop->iteration}} </td>
-                        <td class="col-1"> {{ $value->user_id}} </td>
-                        <td class="col-1"> {{ $value->pengurus1_id}} </td>
-                        <td class="col-1"> {{ $value->permintaan_id}} </td>
-                        <td class="col-1"> {{ $value->keterangan}} </td>
                         <td class="col-1"> {{ $sampah->nama}} </td>
                         <td class="col-1"> {{ $value->berat}} </td>
-                        <td class="col-1"> {{ $value->debit}} </td>
-                        <td class="col-1"> {{ $wilayah->nama}} </td>
                     </tr>
                     @endforeach
                 </tbody>

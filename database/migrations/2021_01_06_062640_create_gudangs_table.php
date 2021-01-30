@@ -15,7 +15,7 @@ class CreateGudangsTable extends Migration
     {
         Schema::create('gudangs', function (Blueprint $table) {
             $table->id();
-            $table->integer('sampah_id');
+            $table->foreignId('sampah_id')->constrained('sampahs')->onUpdate('cascade')->OnDelete('cascade');
             $table->decimal('berat');
             $table->timestamps();
         });

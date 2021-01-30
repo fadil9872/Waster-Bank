@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Role extends Model
 {
     protected $table = 'model_has_roles';
+    protected $fillable = ['model_id', 'role_id'];
 
     public function user () {
         return $this->belongsTo('App\Model\User', 'model_id', 'id');

@@ -3,13 +3,22 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Model\Penjualan;
 use Illuminate\Http\Request;
 
 class PenjualanController extends Controller
 {
     public function index()
     {
-        //
+        $penjualan     = Penjualan::get();
+        return view('admin.penjualan.index', compact('penjualan', $penjualan));
+
+    }
+    public function index2()
+    {
+        $penjualan     = Penjualan::get();
+        return view('bendahara.penjualan.index', compact('penjualan', $penjualan));
+
     }
 
     public function create()

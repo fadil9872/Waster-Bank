@@ -33,6 +33,7 @@ Route::get('ubah/alamat/utama/{id}', 'Api\AlamatController@ubahAlamat')->middlew
 Route::get('message/{id}', 'Api\MessageController@getMessage')->middleware('jwt.verify');
 Route::post('message/{id}', 'Api\MessageController@sendMessage')->middleware('jwt.verify');
 Route::get('message', 'Api\MessageController@getMessage')->middleware('jwt.verify');
+Route::get('kontak', 'MessageController@indexKontak')->middleware('jwt.verify');
 
 Route::post('password/email', 'Api\ForgotPasswordController@forgot');
 Route::post('password/reset', 'Api\ForgotPasswordController@reset');
@@ -44,8 +45,7 @@ Route::get('email/verify/{id}/{hash}', 'Api\VerificationController@verify')->nam
 Route::group(['namespace' => 'Api','middleware' => ['jwt.verify', 'role:nasabah']], function() {
     Route::get('nasabah/get_permintaan', 'NasabahController@get_permintaan');
     Route::post('nasabah/permintaan', 'NasabahController@permintaan');
-    Route::get('nasabah/kontak_penjual', 'MessageController@indexNasabah');
-    Route::get('nasabah/kontak_penjual/add', 'MessageController@addindexNasabah');
+    Route::get('nasabah/kontak/add', 'MessageController@addindexNasabah');
     Route::get('nasabah/tabungan', 'NasabahController@tabungan');
     Route::get('nasabah/coba', 'MessageController@indexCostumer');
 
@@ -61,7 +61,11 @@ Route::group(['namespace' => 'Api', 'middleware' => ['jwt.verify', 'role:penguru
     Route::post('pengurus2/penjualan', 'Pengurus2Controller@penjualan');
     Route::get('pengurus2/get_penjualan', 'Pengurus2Controller@getPenjualanPengepul');
     Route::get('pengurus2/get_gudang', 'Pengurus2Controller@getGudang');
+    
     // Route::
     // Route::
 });
 
+Route::group(['namespace' => 'Api', 'middleware' => ['jwt.verify', 'role:costumer_service']], function() {
+    Route::get('cs/kontak/add', 'MessageController@addindexCs');
+});

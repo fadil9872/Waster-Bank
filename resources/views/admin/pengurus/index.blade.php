@@ -121,7 +121,7 @@
                                             <div class="form-group row">
                                                 <label for="role" class="col-sm-2 col-form-label">Role</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="role" value="{{$value->role_id}}" name="role">
+                                                    <input type="text" class="form-control" id="role" value="{{$value->role_id}}" name="role_id">
                                                 </div>
                                             </div>
                                     </div>
@@ -202,9 +202,25 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="wilayah_id" class="col-sm-2 col-form-label">Wilayah</label>
+                    <label for="wilayah_id" class="col-sm-2 col-form-label">Wilayah</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="wilayah_id" name="wilayah_id">
+                            <select name="wilayah_id" id="wilayah_id" class="form-control">
+                                <option value="">== Select Province ==</option>
+                                @foreach ($wilayahs as $item)
+                                    <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                    <label for="role_id" class="col-sm-2 col-form-label">Role</label>
+                        <div class="col-sm-10">
+                            <select name="role_id" id="role_id" class="form-control">
+                                <option value="">== Select Role ==</option>
+                                @foreach($roles as $roles)
+                                    <option value="{{ $roles->id}}">{{ $roles->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>

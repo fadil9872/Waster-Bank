@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Model\Role;
 use App\Model\User;
+use App\Model\Wilayah;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -13,8 +14,19 @@ class UserController extends Controller
     {
         $users = Role::where('role_id', 6)->get();
 
+        $wilayahs = Wilayah::get();
+        // dd($wilayah[0]['id']);
 
-        return view('admin.nasabah.index', compact('users', $users));
+        return view('admin.nasabah.index', compact('users', 'wilayahs'));
+    }
+    public function index2()
+    {
+        $users = Role::where('role_id', 6)->get();
+
+        $wilayahs = Wilayah::get();
+        // dd($wilayah[0]['id']);
+
+        return view('bendahara.nasabah.index', compact('users', 'wilayahs'));
     }
 
     public function create()

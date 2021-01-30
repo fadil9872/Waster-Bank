@@ -16,7 +16,7 @@ class CreateSaldosTable extends Migration
         Schema::create('saldos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->unique()->onDelete('cascade')->onUpdate('cascade');
-            $table->string('saldo');
+            $table->integer('saldo');
             $table->timestamps();
         });
     }

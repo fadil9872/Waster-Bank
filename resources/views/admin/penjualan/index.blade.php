@@ -23,37 +23,29 @@
                 <thead>
                     <tr>
                         <th class="">No.</th>
-                        <th class="">User_id</th>
-                        <th class="">Pengurus1</th>
-                        <th class="">PermintaanId</th>
-                        <th class="">Keterangan</th>
-                        <th class="">Sampah</th>
+                        <th class="">Pengurus 2</th>
+                        <th class="">Pembeli</th>
+                        <th class="">Gudang Id</th>
                         <th class="">Berat</th>
-                        <th class="">Debit</th>
-                        <th class="">Wilayah</th>
+                        <th class="">Pendapatan</th>
                     </tr>
                 </thead>
                 <tbody class="filter-box">
-                    @foreach($penyetoran as $value)
+                    @foreach($penjualan as $value)
                     <?php
-                    $user   = App\Model\User::where('id', $value->user_id)->first();
-                    $alamat = App\Model\Alamat::where('user_id', $value->pengurus1_id)->where('status', 1)->first();
-                    // $role   = App\Model\Role::where('model_id', $value->id)->first();
-                    $wilayah= App\Model\Wilayah::where('id', $alamat->wilayah_id)->first();
-                    $sampah = App\Model\Sampah::where('id', $value->sampah_id)->first();
+                    $gudang = App\Model\Gudang::where('id', $value->gudang_id)->first();
+
+                    $sampah = App\Model\Sampah::where('id', $gudang->sampah_id)->first();
 
                     ?>
 
                     <tr>
                         <td class="col-1"> {{ $loop->iteration}} </td>
-                        <td class="col-1"> {{ $value->user_id}} </td>
-                        <td class="col-1"> {{ $value->pengurus1_id}} </td>
-                        <td class="col-1"> {{ $value->permintaan_id}} </td>
-                        <td class="col-1"> {{ $value->keterangan}} </td>
+                        <td class="col-1"> {{ $value->pengurus2_id}} </td>
+                        <td class="col-1"> {{ $value->pembeli}} </td>
                         <td class="col-1"> {{ $sampah->nama}} </td>
                         <td class="col-1"> {{ $value->berat}} </td>
-                        <td class="col-1"> {{ $value->debit}} </td>
-                        <td class="col-1"> {{ $wilayah->nama}} </td>
+                        <td class="col-1"> {{ $value->pendapatan}} </td>
                     </tr>
                     @endforeach
                 </tbody>

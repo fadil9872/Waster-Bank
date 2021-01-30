@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Model\Alamat;
 use App\Model\Role;
+use App\Model\Saldo;
 use App\Model\User;
+use App\Model\Wilayah;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -16,10 +19,13 @@ class PengurusController extends Controller
 {
     public function index()
     {
-        $users = Role::where('role_id', '!=', 6)->where('role_id', '!=', 1)->get();
+        $users      = Role::where('role_id', '!=', 6)->where('role_id', '!=', 1)->get();
         // $users = DB::select("select * from model_has_roles where role_id != 1 && role_id != 6");
+        $wilayahs   = Wilayah::get();
 
-        return view('admin.pengurus.index', compact('users', $users));
+        $roles      = DB::select("select * from roles where id != 1 AND id != 6");
+        // dd($roles[0]);
+        return view('admin.pengurus.index', compact('users', 'wilayahs', 'roles'));
     }
 
     public function create()
@@ -50,7 +56,7 @@ class PengurusController extends Controller
             'no_telpon'             =>  $request['no_telpon'],
             'avatar'                =>  'https:\/\/iili.io\/FVdLas.png',
         ]);
-        $user->assignRole($request['role']);
+        $user->assignRole($request->role_id);
 
         //cek user yang sudah di buat tadi
         $old_user = User::where('email', $request->email)->first();
@@ -67,9 +73,9 @@ class PengurusController extends Controller
             'saldo'         =>  '0',
         ]);
         $role   = Role::where('model_id', $old_user->id)->first();
-        $role   = $role->role_id;
+        // dd($role);
 
-        if ($role == 6) {
+        if ($role->role_id == 6) {
             return redirect('admin/nasabah')->with('status', 'User Berhasil Di tambah');
         }
         
@@ -88,19 +94,28 @@ class PengurusController extends Controller
 
     public function update(Request $request, $id)
     {
-        $user = User::where('id', $id)->first();
+        $validator = Validator::make($request->all(), [
+            'name'      =>  'required',
+            'email'     =>  'required',
+            'no_telpon' =>  'required',
+            'role_id'   =>  'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors()->toJson(), 400);
+        }
         
-        $data = $request->all();
+        $user = User::where('id', $id)->first();
+        if ($request->role_id) {
+            $role = DB::select("SELECT * FROM roles WHERE id = $request->role_id");
+            $user->syncRoles($role[0]->name);
+        }
+        
+        $data = $request->all('name', 'email', 'no_telpon');
 
         $filter   = array_filter($data);
 
         $user->update(
-            $filter
-        );
-
-        $alamat = Alamat::where('model_id', $user->id)->first();
-
-        $alamat->update(
             $filter
         );
 
@@ -121,8 +136,20 @@ class PengurusController extends Controller
             
             $user->avatar = $avatar;
             $user->update();
-        }
 
+            
+            
+        }
+        
+        $role   = Role::where('model_id', $user->id)->first();
+        // dd($role);
+
+        if ($role->role_id == 6) {
+            return redirect('admin/nasabah')->with('status', 'User Berhasil Di Edit');
+        }
+        
+        return redirect('admin/pengurus')->with('status', 'User Berhasil Di Edit');
+        
 
     }
 

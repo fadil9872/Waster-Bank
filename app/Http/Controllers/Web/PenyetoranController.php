@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Model\Gudang;
 use App\Model\Pendataan;
 use Illuminate\Http\Request;
 
@@ -13,6 +14,17 @@ class PenyetoranController extends Controller
         $penyetoran = Pendataan::get();
 
         return view('admin.penyetoran.index', compact('penyetoran', $penyetoran));
+    }
+    public function index2()
+    {
+        $penyetoran = Pendataan::get();
+
+        return view('bendahara.penyetoran.index', compact('penyetoran', $penyetoran));
+    }
+
+    public function gudang()
+    {
+
     }
 
     public function create()

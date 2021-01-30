@@ -27,33 +27,50 @@ Route::get('admin-page', function() {
 Route::get('user-page', function() {
     return 'Halaman untuk User';
 })->middleware('role:user')->name('user.page');
-// Route::group(['namesace' => 'Web', 'middleware' => 'role:admin'], function() {
+Route::group(['middleware' => 'role:admin'], function() {
+    //Dashboard
+    Route::get('admin', 'Web\AdminController@index')->name('dashboard');
 
     //Pengurus
-    Route::get('admin/pengurus', 'Web\PengurusController@index');
+    Route::get('admin/pengurus', 'Web\PengurusController@index')->name('pengurus');
     Route::post('admin/pengurus/tambah', 'Web\PengurusController@store');
-    Route::post('admin/pengurus/update/{id}', 'Web\PengurusController@update');
+    Route::patch('admin/pengurus/update/{id}', 'Web\PengurusController@update');
     
     //Nasabah
-    Route::get('admin/nasabah', 'Web\UserController@index');
+    Route::get('admin/nasabah', 'Web\UserController@index')->name('nasabah');    
+    Route::post('admin/nasabah/tambah', 'Web\PengurusController@store');
+    Route::delete('admin/nasabah/delete/{id}', 'Web\PengurusController@destroy');
     Route::patch('admin/nasabah/update/{id}', 'Web\PengurusController@update');
+    //Tabungan
+    Route::get('admin/tabungan/nasabah/{id}', 'Web\TabunganController@index')->name('tabungan');
+    Route::post('admin/tabungan/nasabah/tambah', 'Web\TabunganController@store');
+    Route::patch('admin/tabungan/nasabah/update/{id}', 'Web\TabunganController@update');
+    Route::delete('admin/tabungan/nasabah/delete/{id}', 'Web\TabunganController@destroy');
     
-    Route::get('admin/tabungan/nasabah/{id}', 'Web\TabunganController@index');
-    Route::patch('admin/nasabah/tambah', 'Web\PengurusController@store');
-
     //Penyetoran OR Pendataan
-    Route::get('admin/penyetoran', 'Web\PenyetoranController@index');
-
+    Route::get('admin/penyetoran', 'Web\PenyetoranController@index')->name('penyetoran');
+    Route::get('admin/gudang', 'Web\GudangController@index')->name('gudang');               //Gudang
+    Route::get('admin/penjualan', 'Web\PenjualanController@index')->name('penjualan');      //Penjualan
+    
+    
     //Sampah
-    Route::get('admin', 'Web\AdminController@index');
-    Route::get('admin/sampah', 'Web\AdminController@sampah');
-    Route::post('admin/sampah/tambah', 'Web\AdminController@addSampah');
-    Route::patch('admin/sampah/update/{id}', 'Web\AdminController@ubahSampah');
-    Route::delete('admin/sampah/delete/{id}', 'Web\AdminController@hapusSampah');
-    Route::get('admin/sampah/cari', 'Web\AdminController@cari');
+    Route::get('admin/sampah', 'Web\SampahController@index')->name('sampah');
+    Route::post('admin/sampah/tambah', 'Web\SampahController@store');
+    Route::patch('admin/sampah/update/{id}', 'Web\SampahController@update');
+    Route::delete('admin/sampah/delete/{id}', 'Web\SampahController@destroy');
+    Route::get('admin/sampah/cari', 'Web\SampahController@cari');
     Route::get('cs/chat', function() {
         return view('cs/chat/index');
     });
+});
+
+// Route::group(['namespace' => 'Web', 'middleware' => 'role:bendahara'], function() {
+    Route::get('bendahara', 'BendaharaController@index2')->name('b_dashboard');
+    Route::get('bendahara/nasabah', 'Web\UserController@index2')->name('b_nasabah');    
+    Route::get('bendahara/penyetoran', 'Web\PenyetoranController@index2')->name('b_penyetoran');
+    Route::get('bendahara/penjualan', 'Web\PenjualanController@index2')->name('b_penjualan');    //Penjualan
+    Route::get('bendahara/gudang', 'Web\GudangController@index2')->name('b_gudang');
+    Route::get('bendahara/tabungan/nasabah/{id}', 'Web\TabunganController@index2')->name('b_tabungan');
 // });
 
 Route::get('/ajax', function () {

@@ -79,9 +79,15 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="harga" class="col-sm-2 col-form-label">Price</label>
+                                                <label for="harga_pengepul" class="col-sm-2 col-form-label">Price Pengepul</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="harga" value="{{$item->harga}}" name="harga">
+                                                    <input type="text" class="form-control" id="harga_pengepul" value="{{$item->harga_pengepul}}" name="harga_pengepul">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="harga_nasabah" class="col-sm-2 col-form-label">Price Nasabah</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="harga_nasabah" value="{{$item->harga_nasabah}}" name="harga_nasabah">
                                                 </div>
                                             </div>
                                     </div>
@@ -132,9 +138,15 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="harga" class="col-sm-2 col-form-label">Price</label>
+                        <label for="harga_pengepul" class="col-sm-2 col-form-label">Price Pengepul</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="harga" name="harga">
+                            <input type="text" class="form-control" id="harga_pengepul" name="harga_pengepul">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="harga_nasabah" class="col-sm-2 col-form-label">Price Nasabah</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="harga_nasabah" name="harga_nasabah">
                         </div>
                     </div>
                 </div>

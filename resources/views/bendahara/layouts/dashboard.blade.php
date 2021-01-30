@@ -60,28 +60,23 @@
                 <nav class="navbar-sidebar2">
                     <ul class="list-unstyled navbar__list">
                         <li>
-                            <a href="{{route('dashboard')}}">
+                            <a href="{{route('b_dashboard')}}">
                                 <i class="fas fa-tachometer-alt"></i>Dashboard</a>
                         </li>
                         <li>
-                            <a href="{{route('pengurus')}}">
-                                <i class="fas fa-users"></i>Pengurus</a>
-                            <span class="inbox-num">3</span>
-                        </li>
-                        <li>
-                            <a href="{{route('nasabah')}}">
+                            <a href="{{route('b_nasabah')}}">
                                 <i class="fas fa-users"></i>Nasabah</a>
                         </li>
                         <li>
-                            <a href="{{route('sampah')}}">
-                                <i class="fas fa-shopping-cart"></i>Sampah</a>
+                            <a href="{{route('b_gudang')}}">
+                                <i class="fas fa-shopping-cart"></i>Gudang</a>
                         </li>
                         <li>
-                            <a href="{{route('penyetoran')}}">
+                            <a href="{{route('b_penyetoran')}}">
                                 <i class="fas fa-book"></i>Penyetoran</a>
                         </li>
                         <li>
-                            <a href="{{route('sampah')}}">
+                            <a href="{{route('b_penjualan')}}">
                                 <i class="fas fa-shopping-basket"></i>Penjualan Sampah</a>
 
                     </ul>

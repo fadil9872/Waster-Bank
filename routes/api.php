@@ -33,7 +33,7 @@ Route::get('ubah/alamat/utama/{id}', 'Api\AlamatController@ubahAlamat')->middlew
 Route::get('message/{id}', 'Api\MessageController@getMessage')->middleware('jwt.verify');
 Route::post('message/{id}', 'Api\MessageController@sendMessage')->middleware('jwt.verify');
 Route::get('message', 'Api\MessageController@getMessage')->middleware('jwt.verify');
-Route::get('kontak', 'MessageController@indexKontak')->middleware('jwt.verify');
+Route::get('kontak', 'Api\MessageController@indexKontak')->middleware('jwt.verify');
 
 Route::post('password/email', 'Api\ForgotPasswordController@forgot');
 Route::post('password/reset', 'Api\ForgotPasswordController@reset');

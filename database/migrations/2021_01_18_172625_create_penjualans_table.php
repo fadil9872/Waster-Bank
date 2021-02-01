@@ -13,6 +13,7 @@ class CreatePenjualansTable extends Migration
      */
     public function up()
     {
+
         Schema::create('penjualans', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pengurus2_id')->constrained('users');

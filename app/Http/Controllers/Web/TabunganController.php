@@ -28,13 +28,12 @@ class TabunganController extends Controller
 
     public function create()
     {
-
     }
 
     public function store(Request $request)
     {
-        
-        $penjumlahan = $request->debit - $request->kredit; 
+
+        $penjumlahan = $request->debit - $request->kredit;
 
         $users = Tabungan::create([
             'user_id'       => $request->user_id,
@@ -48,17 +47,31 @@ class TabunganController extends Controller
         $saldo->save();
 
 
-        return redirect('admin/tabungan/nasabah/'. $request->user_id)->with('status', 'Tabungan Berhasil Di tambah');
+        return redirect('admin/tabungan/nasabah/' . $request->user_id)->with('status', 'Tabungan Berhasil Di tambah');
     }
 
-    public function show($id)
+    public function store2(Request $request)
     {
-        //
+
+        $penjumlahan = $request->debit - $request->kredit;
+
+        $users = Tabungan::create([
+            'user_id'       => $request->user_id,
+            'keterangan'    => $request->keterangan,
+            'debit'         => $request->debit,
+            'kredit'        => $request->kredit,
+        ]);
+
+        $saldo = Saldo::where('user_id', $request->user_id)->first();
+        $saldo->saldo = $saldo->saldo + $penjumlahan;
+        $saldo->save();
+
+
+        return redirect('bendahara/tabungan/nasabah/' . $request->user_id)->with('status', 'Tabungan Berhasil Di tambah');
     }
 
     public function edit($id)
     {
-
     }
 
     public function update(Request $request, $id)
@@ -73,16 +86,25 @@ class TabunganController extends Controller
             $filter
         );
 
-        return redirect('admin/tabungan/nasabah/'. $users->user_id)->with('status', 'Tabungan Berhasil Di Edit');
+        $penjumlahan = $request->debit - $request->kredit;
+        $saldo = Saldo::where('user_id', $request->user_id)->first();
+        $saldo->saldo = $saldo->saldo + $penjumlahan;
+        $saldo->save();
 
+        return redirect('admin/tabungan/nasabah/' . $users->user_id)->with('status', 'Tabungan Berhasil Di Edit');
     }
 
     public function destroy($id)
     {
         $tabungan = Tabungan::where('id', $id)->first();
-        $user     = $tabungan->user_id;
-        $tabungan->delete();
-        return redirect('admin/tabungan/nasabah/'. $user)->with('status', 'Tabungan Berhasil Di Hapus');
+
+        $penjumlahan = $tabungan->debit - $tabungan->kredit;
+        $saldo = Saldo::where('user_id', $tabungan->user_id)->first();
+        $saldo->saldo = $saldo->saldo + $penjumlahan;
+        $saldo->save();
         
+        $user       = $tabungan->user_id;
+        $tabungan->delete();
+        return redirect('admin/tabungan/nasabah/' . $user)->with('status', 'Tabungan Berhasil Di Hapus');
     }
 }

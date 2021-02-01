@@ -38,6 +38,7 @@
                     <?php
                     $user   = App\Model\User::where('id', $value->user_id)->first();
                     $alamat = App\Model\Alamat::where('user_id', $value->pengurus1_id)->where('status', 1)->first();
+                    $pengurus = App\Model\User::where('id', $value->pengurus1_id)->first();
                     // $role   = App\Model\Role::where('model_id', $value->id)->first();
                     $wilayah= App\Model\Wilayah::where('id', $alamat->wilayah_id)->first();
                     $sampah = App\Model\Sampah::where('id', $value->sampah_id)->first();
@@ -47,8 +48,8 @@
                     <tr>
                         <td class="col-1"> {{ $loop->iteration}} </td>
                         <td class="col-1"> {{ $value->user_id}} </td>
-                        <td class="col-1"> {{ $value->pengurus1_id}} </td>
-                        <td class="col-1"> {{ $value->permintaan_id}} </td>
+                        <td class="col-1"> {{ $pengurus->name}} </td>
+                        <td class="col-1"> <a id="permintaan" href="permintaan/{{$value->permintaan_id}}">{{ $value->permintaan_id}} </a></td>
                         <td class="col-1"> {{ $value->keterangan}} </td>
                         <td class="col-1"> {{ $sampah->nama}} </td>
                         <td class="col-1"> {{ $value->berat}} </td>

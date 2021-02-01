@@ -97,38 +97,21 @@
                     <div class="task-progress">
                         <h3 class="title-3">task progress</h3>
                         <div class="au-skill-container">
+                            @foreach($gudang as $item)
+                            <?php
+                                $sampah = App\Model\Sampah::where('id', $item->sampah_id)->first();
+
+                                $jumlah = $item->berat / 50 * 100;
+                            ?>
                             <div class="au-progress">
-                                <span class="au-progress__title">Web Design</span>
+                                <span class="au-progress__title">{{$sampah->nama}}</span>
                                 <div class="au-progress__bar">
-                                    <div class="au-progress__inner js-progressbar-simple" role="progressbar" data-transitiongoal="90">
+                                    <div class="au-progress__inner js-progressbar-simple" role="progressbar" data-transitiongoal="{{$jumlah}}">
                                         <span class="au-progress__value js-value"></span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="au-progress">
-                                <span class="au-progress__title">HTML5/CSS3</span>
-                                <div class="au-progress__bar">
-                                    <div class="au-progress__inner js-progressbar-simple" role="progressbar" data-transitiongoal="85">
-                                        <span class="au-progress__value js-value"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="au-progress">
-                                <span class="au-progress__title">WordPress</span>
-                                <div class="au-progress__bar">
-                                    <div class="au-progress__inner js-progressbar-simple" role="progressbar" data-transitiongoal="95">
-                                        <span class="au-progress__value js-value"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="au-progress">
-                                <span class="au-progress__title">Support</span>
-                                <div class="au-progress__bar">
-                                    <div class="au-progress__inner js-progressbar-simple" role="progressbar" data-transitiongoal="95">
-                                        <span class="au-progress__value js-value"></span>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                     <!-- END TASK PROGRESS-->

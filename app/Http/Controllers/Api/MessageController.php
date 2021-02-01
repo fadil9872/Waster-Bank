@@ -28,6 +28,15 @@ class MessageController extends Controller
                 ->where('to', $my_id);
         })->get();
 
+        $messageMe = Message::where(function ($query) use ($user_id, $my_id) {
+            $query
+            ->where('from', $my_id)
+            ->where('to', $user_id);
+        })->get();
+        // dd($messageMe);
+        $messageMe->is_read = 1;
+        $messageMe->update();
+
         if (!$message) {
             return $this->sendResponse('error', 'Pesan tidak ada', NULL, 404);
         }

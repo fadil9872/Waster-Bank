@@ -54,7 +54,7 @@
                     <div class="image img-cir img-120">
                         <img src="{{ asset('images/icon/avatar-big-01.jpg')}}" alt="John Doe" />
                     </div>
-                    <h4 class="name">john doe</h4>
+                    <h4 class="name">{{Auth::user()->name}}</h4>
                     <a href="#">Sign out</a>
                 </div>
                 <nav class="navbar-sidebar2">
@@ -81,7 +81,7 @@
                                 <i class="fas fa-book"></i>Penyetoran</a>
                         </li>
                         <li>
-                            <a href="{{route('sampah')}}">
+                            <a href="{{route('penjualan')}}">
                                 <i class="fas fa-shopping-basket"></i>Penjualan Sampah</a>
 
                     </ul>
@@ -244,7 +244,6 @@
                 $(this).text().toLowerCase()
             );
         }
-
     </script>
 
 

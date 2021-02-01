@@ -30,9 +30,9 @@ Route::patch('edit/alamat/{id}', 'Api\AlamatController@editAlamat')->middleware(
 Route::delete('hapus/alamat/{id}', 'Api\AlamatController@hapusAlamat')->middleware('jwt.verify');
 Route::get('ubah/alamat/utama/{id}', 'Api\AlamatController@ubahAlamat')->middleware('jwt.verify');
 
-Route::get('message/{id}', 'Api\MessageController@getMessage')->middleware('jwt.verify');
+// Route::get('message/{id}', 'Api\MessageController@getMessage')->middleware('jwt.verify');
 Route::post('message/{id}', 'Api\MessageController@sendMessage')->middleware('jwt.verify');
-Route::get('message', 'Api\MessageController@getMessage')->middleware('jwt.verify');
+Route::get('message/{id}', 'Api\MessageController@getMessage')->middleware('jwt.verify');
 Route::get('kontak', 'Api\MessageController@indexKontak')->middleware('jwt.verify');
 
 Route::post('password/email', 'Api\ForgotPasswordController@forgot');

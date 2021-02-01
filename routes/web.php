@@ -43,9 +43,9 @@ Route::group(['middleware' => 'role:admin'], function() {
     Route::patch('admin/nasabah/update/{id}', 'Web\PengurusController@update');
     //Tabungan
     Route::get('admin/tabungan/nasabah/{id}', 'Web\TabunganController@index')->name('tabungan');
-    Route::post('admin/tabungan/nasabah/tambah', 'Web\TabunganController@store');
-    Route::patch('admin/tabungan/nasabah/update/{id}', 'Web\TabunganController@update');
-    Route::delete('admin/tabungan/nasabah/delete/{id}', 'Web\TabunganController@destroy');
+    Route::post('admin/tabungan/nasabah/tambah', 'Web\TabunganController@store')->name('tambah_tabungan');
+    Route::patch('admin/tabungan/nasabah/update/{id}', 'Web\TabunganController@update')->name('ubah_tabungan');
+    Route::delete('admin/tabungan/nasabah/delete/{id}', 'Web\TabunganController@destroy')->name('delete_tabungan');
     
     //Penyetoran OR Pendataan
     Route::get('admin/penyetoran', 'Web\PenyetoranController@index')->name('penyetoran');
@@ -65,12 +65,14 @@ Route::group(['middleware' => 'role:admin'], function() {
 });
 
 // Route::group(['namespace' => 'Web', 'middleware' => 'role:bendahara'], function() {
-    Route::get('bendahara', 'BendaharaController@index2')->name('b_dashboard');
+    Route::get('bendahara', 'Web\BendaharaController@index')->name('b_dashboard');
     Route::get('bendahara/nasabah', 'Web\UserController@index2')->name('b_nasabah');    
     Route::get('bendahara/penyetoran', 'Web\PenyetoranController@index2')->name('b_penyetoran');
     Route::get('bendahara/penjualan', 'Web\PenjualanController@index2')->name('b_penjualan');    //Penjualan
     Route::get('bendahara/gudang', 'Web\GudangController@index2')->name('b_gudang');
     Route::get('bendahara/tabungan/nasabah/{id}', 'Web\TabunganController@index2')->name('b_tabungan');
+    Route::post('bendahara/tabungan/nasabah/tambah', 'Web\TabunganController@store2')->name('tambah_tabungan');
+
 // });
 
 Route::get('/ajax', function () {

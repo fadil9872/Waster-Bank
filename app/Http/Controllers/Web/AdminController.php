@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Model\Gudang;
 use App\Model\Pendataan;
 use App\Model\Penjualan;
 use App\Model\Role;
@@ -20,7 +21,8 @@ class AdminController extends Controller
         $saldo_bank = Saldo::where('id', $users->model_id)->first();
         $penjualan  = Penjualan::get()->count();
         $pendataan  = Pendataan::get()->count();
-        return view('admin.index', compact('saldo_bank', 'user', 'penjualan', 'pendataan'));
+        $gudang     = Gudang::get();
+        return view('admin.index', compact('saldo_bank', 'gudang', 'user', 'penjualan', 'pendataan'));
 
     }
 }

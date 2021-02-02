@@ -30,8 +30,8 @@ class MessageController extends Controller
         // dd($messageMe);
         $messageMe = Message::where(function ($query) use ($user_id, $my_id) {
             $query
-            ->where('from', $my_id)
-            ->where('to', $user_id);
+                ->where('from', $my_id)
+                ->where('to', $user_id);
         })->update(['is_read' => 1]);
         // $messageMe->update();
 
@@ -111,17 +111,21 @@ class MessageController extends Controller
         $from = User::select('users.id', 'users.name', 'users.avatar')->distinct()
             ->join('messages', 'users.id', '=', 'messages.from')
             ->where('users.id', '!=', $user->id)
-            ->where('messages.to', '=', $user->id)    
+            ->where('messages.to', '=', $user->id)
             ->get()->toArray();
+
 
         $to   = User::select('users.id', 'users.name', 'users.avatar')->distinct()
             ->join('messages', 'users.id', '=', 'messages.to')
             ->where('users.id', '!=', $user->id)
-            ->where('messages.from', '=', $user->id)    
+            ->where('messages.from', '=', $user->id)
             ->get()->toArray();
+        // $too = DB::select("SELECT users.id, users.name, users.avatar, count(is_read) as unread from users LEFT JOIN")
+
+        
 
         $data = array_merge($from, $to);
-        
+
         $data = array_unique($data, SORT_REGULAR);
         $kontak = array_values($data);
 
@@ -132,5 +136,4 @@ class MessageController extends Controller
             'data'      => $kontak,
         ]);
     }
-
 }

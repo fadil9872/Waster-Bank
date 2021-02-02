@@ -20,16 +20,16 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('admin-page', function() {
-    return 'Halaman untuk Admin';
-})->middleware('role:admin')->name('admin.page');
+// Route::get('admin-page', function() {
+//     return 'Halaman untuk Admin';
+// })->middleware('role:admin')->name('admin.page');
 
-Route::get('user-page', function() {
-    return 'Halaman untuk User';
-})->middleware('role:user')->name('user.page');
+// Route::get('user-page', function() {
+//     return 'Halaman untuk User';
+// })->middleware('role:user')->name('user.page');
 Route::group(['middleware' => 'role:admin'], function() {
     //Dashboard
-    Route::get('admin', 'Web\AdminController@index')->name('dashboard');
+    Route::get('admin', 'Web\AdminController@index')->name('admin.page');
 
     //Pengurus
     Route::get('admin/pengurus', 'Web\PengurusController@index')->name('pengurus');
@@ -64,8 +64,8 @@ Route::group(['middleware' => 'role:admin'], function() {
     });
 });
 
-// Route::group(['namespace' => 'Web', 'middleware' => 'role:bendahara'], function() {
-    Route::get('bendahara', 'Web\BendaharaController@index')->name('b_dashboard');
+Route::group(['namespace' => 'Web', 'middleware' => 'role:bendahara'], function() {
+    Route::get('bendahara', 'Web\BendaharaController@index')->name('bendahara.page');
     Route::get('bendahara/nasabah', 'Web\UserController@index2')->name('b_nasabah');    
     Route::get('bendahara/penyetoran', 'Web\PenyetoranController@index2')->name('b_penyetoran');
     Route::get('bendahara/penjualan', 'Web\PenjualanController@index2')->name('b_penjualan');    //Penjualan
@@ -73,7 +73,7 @@ Route::group(['middleware' => 'role:admin'], function() {
     Route::get('bendahara/tabungan/nasabah/{id}', 'Web\TabunganController@index2')->name('b_tabungan');
     Route::post('bendahara/tabungan/nasabah/tambah', 'Web\TabunganController@store2')->name('tambah_tabungan');
 
-// });
+});
 
 Route::get('/ajax', function () {
     return view('admin/layouts/ajax');

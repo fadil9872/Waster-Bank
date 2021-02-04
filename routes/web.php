@@ -64,7 +64,7 @@ Route::group(['middleware' => 'role:admin'], function() {
     });
 });
 
-Route::group(['namespace' => 'Web', 'middleware' => 'role:bendahara'], function() {
+Route::group(['middleware' => 'role:bendahara'], function() {
     Route::get('bendahara', 'Web\BendaharaController@index')->name('bendahara.page');
     Route::get('bendahara/nasabah', 'Web\UserController@index2')->name('b_nasabah');    
     Route::get('bendahara/penyetoran', 'Web\PenyetoranController@index2')->name('b_penyetoran');
@@ -72,8 +72,11 @@ Route::group(['namespace' => 'Web', 'middleware' => 'role:bendahara'], function(
     Route::get('bendahara/gudang', 'Web\GudangController@index2')->name('b_gudang');
     Route::get('bendahara/tabungan/nasabah/{id}', 'Web\TabunganController@index2')->name('b_tabungan');
     Route::post('bendahara/tabungan/nasabah/tambah', 'Web\TabunganController@store2')->name('tambah_tabungan');
+    Route::patch('bendahara/tabungan/nasabah/update/{id}', 'Web\TabunganController@update')->name('update_tabungan');
 
 });
+
+
 
 Route::get('/ajax', function () {
     return view('admin/layouts/ajax');

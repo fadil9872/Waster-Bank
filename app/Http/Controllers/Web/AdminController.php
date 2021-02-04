@@ -11,6 +11,7 @@ use App\Model\Saldo;
 use App\Model\Sampah;
 use App\Model\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -23,6 +24,18 @@ class AdminController extends Controller
         $pendataan  = Pendataan::get()->count();
         $gudang     = Gudang::get();
         return view('admin.index', compact('saldo_bank', 'gudang', 'user', 'penjualan', 'pendataan'));
+    }
 
+    public function setting () 
+    {
+        $users  = User::where('id', Auth::id());
+
+        $data = $request->all('name', 'email', 'no_telpon');
+
+        $filter   = array_filter($data);
+
+        $user->update($filter);
+
+        return redirect('admin/setting')->with('status', 'updated success ')
     }
 }

@@ -12,18 +12,20 @@ class TabunganController extends Controller
     public function index($id)
     {
         $users   = Tabungan::where('user_id', $id)->get();
+        $saldo   = Saldo::where('user_id', $id)->first();
 
         $idku = $id;
 
-        return view('admin.tabungan.index', compact('users', 'idku'));
+        return view('admin.tabungan.index', compact('users', 'idku', 'saldo'));
     }
     public function index2($id)
     {
         $users   = Tabungan::where('user_id', $id)->get();
+        $saldo   = Saldo::where('user_id', $id)->first();
 
         $idku = $id;
 
-        return view('bendahara.tabungan.index', compact('users', 'idku'));
+        return view('bendahara.tabungan.index', compact('users', 'idku', 'saldo'));
     }
 
     public function create()
@@ -41,6 +43,7 @@ class TabunganController extends Controller
             'debit'         => $request->debit,
             'kredit'        => $request->kredit,
         ]);
+
 
         $saldo = Saldo::where('user_id', $request->user_id)->first();
         $saldo->saldo = $saldo->saldo + $penjumlahan;
@@ -76,22 +79,54 @@ class TabunganController extends Controller
 
     public function update(Request $request, $id)
     {
-        $users = Tabungan::where('id', $id)->first();
+        $tabungan = Tabungan::where('id', $id)->first();
+
+        $debit  = ($tabungan->debit - $request->debit);
+        $kredit = ($tabungan->kredit - $request->kredit);
+
+        // dd($kredit);
 
         $data = $request->all();
 
         $filter   = array_filter($data);
 
-        $users->update(
+        $tabungan->update(
             $filter
         );
 
-        $penjumlahan = $request->debit - $request->kredit;
-        $saldo = Saldo::where('user_id', $request->user_id)->first();
-        $saldo->saldo = $saldo->saldo + $penjumlahan;
+        $penjumlahan = $debit - $kredit;
+        $saldo = Saldo::where('user_id', $tabungan->user_id)->first();
+        $saldo->saldo = $saldo->saldo + $debit;
+        $saldo->saldo = $saldo->saldo + $kredit;
         $saldo->save();
 
-        return redirect('admin/tabungan/nasabah/' . $users->user_id)->with('status', 'Tabungan Berhasil Di Edit');
+        return redirect('admin/tabungan/nasabah/' . $tabungan->user_id)->with('status', 'Tabungan Berhasil Di Edit');
+    }
+ 
+    public function update2(Request $request, $id)
+    {
+        $tabungan = Tabungan::where('id', $id)->first();
+
+        $debit  = ($tabungan->debit - $request->debit);
+        $kredit = ($tabungan->kredit - $request->kredit);
+
+        // dd($kredit);
+
+        $data = $request->all();
+
+        $filter   = array_filter($data);
+
+        $tabungan->update(
+            $filter
+        );
+
+        $penjumlahan = $debit - $kredit;
+        $saldo = Saldo::where('user_id', $tabungan->user_id)->first();
+        $saldo->saldo = $saldo->saldo + $debit;
+        $saldo->saldo = $saldo->saldo + $kredit;
+        $saldo->save();
+
+        return redirect('bendahara/tabungan/nasabah/' . $tabungan->user_id)->with('status', 'Tabungan Berhasil Di Edit');
     }
 
     public function destroy($id)

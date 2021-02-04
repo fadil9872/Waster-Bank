@@ -21,7 +21,7 @@ class BendaharaController extends Controller
         $penjualan  = Penjualan::get()->count();
         $pendataan  = Pendataan::get()->count();
         $gudang     = Gudang::get();
-        return view('admin.index', compact('saldo_bank', 'gudang', 'user', 'penjualan', 'pendataan'));
+        return view('bendahara.index', compact('saldo_bank', 'gudang', 'user', 'penjualan', 'pendataan'));
     }
 
     public function create()

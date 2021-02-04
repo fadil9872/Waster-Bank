@@ -4,9 +4,10 @@
 @endsection
 
 @section('button')
+<button type="button" name="" id="" class="btn btn-primary" btn-lg btn-block"> Saldo Nasabah = {{$saldo->saldo}}</button>
 <!-- Button trigger modal -->
 <button type="button" class="au-btn au-btn-icon au-btn--green" data-toggle="modal" data-target="#ModalLabelTambah">
-    <i class="zmdi zmdi-plus"></i>add value
+    <i class="zmdi zmdi-plus"></i>add Penarikan
 </button>
 
 @endsection
@@ -79,7 +80,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="update/{{$value->id}}" method="post">
+                                        <form action="{{route('update_tabungan',[$value->id])}}" method="post">
                                             @method('patch')
                                             @csrf
                                             <div class="form-group row">
@@ -150,12 +151,13 @@
                                                 <input type="text" class="form-control" id="keterangan" name="keterangan">
                                             </div>
                                         </div>
-                                        <div class="form-group row">
+                                        <input type="hidden" class="form-control" value="0" name="debit" >
+                                        <!-- <div class="form-group row">
                                             <label for="debit" class="col-sm-2 col-form-label">Debit</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control" id="debit" name="debit" value="0">
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="form-group row">
                                             <label for="kredit" class="col-sm-2 col-form-label">Kredit</label>
                                             <div class="col-sm-10">

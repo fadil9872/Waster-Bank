@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Model\Role;
+use App\Model\Saldo;
 use App\Model\User;
 use App\Model\Wilayah;
 use Illuminate\Http\Request;
@@ -21,7 +22,11 @@ class UserController extends Controller
     }
     public function index2()
     {
-        $users = Role::where('role_id', 6)->get();
+        $users = Role::where('role_id', 6)->with('saldo')->get();
+
+        // dd($users);
+
+        // $saldo = Saldo::where('user_id', $users->model_id)->first();
 
         $wilayahs = Wilayah::get();
         // dd($wilayah[0]['id']);

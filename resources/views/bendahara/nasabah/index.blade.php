@@ -50,8 +50,8 @@
                         <td> {{ $user->email}} </td>
                         <td> {{ $user->no_telpon}} </td>
                         <td> {{ $alamat->alamat}} </td>
-                        <td> {{ $saldo->saldo}} </td>
                         <td> {{ $wilayah->nama}} </td>
+                        <td> {{ $saldo->saldo}} </td>
                         <td>
                             <!-- Button trigger modal -->
                             <a class="btn btn-warning" href="tabungan/nasabah/{{$user->id}}">
